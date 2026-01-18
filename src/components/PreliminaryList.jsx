@@ -90,7 +90,7 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
     });
 
     return filtered;
-  }, [schools, filterType, searchQuery, sortBy, sortOrder]);
+  }, [schools, filterType, searchQuery, sortBy, sortOrder, applicantData]);
 
   const handleSort = (newSortBy) => {
     if (sortBy === newSortBy) {
