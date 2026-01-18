@@ -66,7 +66,7 @@
 /* Focus states for accessibility */
 .resource-item:focus,
 .expand-button:focus {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid var(--brand-focus-ring);
   outline-offset: 2px;
 }
 

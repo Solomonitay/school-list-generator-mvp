@@ -163,6 +163,12 @@ function App() {
                       <span className="detail-label">Institution:</span>
                       <span className="detail-value">{selectedSchoolData['Public School Status']}</span>
                     </div>
+                    <div className="detail-row">
+                      <span className="detail-label">International Students:</span>
+                      <span className="detail-value">
+                        {selectedSchoolData['Accepts International Students'] ? 'Accepted' : 'Not Accepted'}
+                      </span>
+                    </div>
 
                     {/* Matriculation Information - Always shown */}
                     <div className="detail-row">

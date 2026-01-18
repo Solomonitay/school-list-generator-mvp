@@ -130,8 +130,17 @@ function SchoolSelector({ schools, onAddToList, onSchoolSelect, applicantData })
                     <div className="school-name">
                       {school['Medical School Name'] || 'Unknown School'}
                     </div>
-                    <div className="school-state">
-                      {school.State || 'Unknown State'}
+                    <div className="school-details">
+                      <div className="school-state">
+                        {school.State || 'Unknown State'}
+                      </div>
+                      <div className="international-indicator">
+                        {school['Accepts International Students'] ? (
+                          <span className="intl-badge accepted">🌍 Intl</span>
+                        ) : (
+                          <span className="intl-badge not-accepted">🏠 US Only</span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
