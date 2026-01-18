@@ -1,0 +1,60 @@
+.applicant-info {
+  background: var(--color-white);
+  padding: 0;
+  border-radius: 8px;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-field label {
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 500; /* font-medium */
+  color: var(--brand-text-secondary);
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* tracking-wide */
+}
+
+.profile-field input,
+.profile-field select {
+  padding: 0.5rem;
+  border: 1px solid var(--brand-border);
+  border-radius: 0.375rem; /* rounded-md */
+  background: var(--brand-white);
+  color: var(--brand-text);
+  font-size: 0.875rem; /* text-sm */
+  transition: all 0.2s;
+}
+
+.profile-field input:focus,
+.profile-field select:focus {
+  outline: none;
+  border-color: var(--brand-teal);
+  box-shadow: 0 0 0 2px rgba(161, 217, 207, 0.2);
+}
+
+.profile-field select {
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
