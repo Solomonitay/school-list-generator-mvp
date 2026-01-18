@@ -313,6 +313,13 @@
   color: var(--brand-white);
 }
 
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  margin-top: 1rem;
+}
+
 .website-badge {
   background: var(--brand-white-smoke);
   color: var(--brand-text-secondary);

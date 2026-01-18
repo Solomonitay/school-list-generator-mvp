@@ -193,20 +193,34 @@ function App() {
                       </span>
                     </div>
 
-                    <div className="preview-row full-width">
-                      {selectedSchoolData['Website URL'] ? (
-                        <a
-                          href={selectedSchoolData['Website URL']}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="website-link"
-                        >
-                          Visit Website
-                        </a>
-                      ) : (
-                        <span className="website-badge">Website not available</span>
-                      )}
-                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="action-buttons">
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => {
+                        if (selectedSchoolData['Website URL']) {
+                          window.open(selectedSchoolData['Website URL'], '_blank', 'noopener,noreferrer');
+                        }
+                      }}
+                      disabled={!selectedSchoolData || !selectedSchoolData['Website URL']}
+                    >
+                      Visit Website
+                    </button>
+
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        if (selectedSchoolData) {
+                          addToPreliminaryList(selectedSchoolData);
+                          setSelectedSchoolData(null);
+                        }
+                      }}
+                      disabled={!selectedSchoolData}
+                    >
+                      Add to List
+                    </button>
                   </div>
                 </>
               ) : (
@@ -214,19 +228,6 @@ function App() {
                   <p className="empty-text">Search and select a school above to view its profile</p>
                 </div>
               )}
-
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  if (selectedSchoolData) {
-                    addToPreliminaryList(selectedSchoolData);
-                    setSelectedSchoolData(null);
-                  }
-                }}
-                disabled={!selectedSchoolData}
-              >
-                Add to List
-              </button>
             </div>
           </div>
 
