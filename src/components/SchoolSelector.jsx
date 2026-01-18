@@ -87,7 +87,7 @@ function SchoolSelector({ schools, onAddToList, onSchoolSelect, applicantData })
                 No schools found
               </div>
             ) : (
-              filteredSchools.slice(0, 10).map((school) => (
+              filteredSchools.map((school) => (
                 <div
                   key={school['Medical School Name']}
                   className="dropdown-item"
@@ -95,6 +95,21 @@ function SchoolSelector({ schools, onAddToList, onSchoolSelect, applicantData })
                 >
                   <div className="school-name">{school['Medical School Name']}</div>
                   <div className="school-state">{school.State}</div>
+                  {/* Show acceptance rates if available */}
+                  {(school['In-State Acceptance Rate %'] || school['Out-of-State Acceptance Rate %']) && (
+                    <div className="school-rates">
+                      {school['In-State Acceptance Rate %'] && (
+                        <span className="rate-badge in-state">
+                          In: {school['In-State Acceptance Rate %']}%
+                        </span>
+                      )}
+                      {school['Out-of-State Acceptance Rate %'] && (
+                        <span className="rate-badge out-state">
+                          Out: {school['Out-of-State Acceptance Rate %']}%
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))
             )}
