@@ -1,176 +1,176 @@
 Medical School Name,State,Degree Type,Average GPA,Average MCAT,Minimum MCAT Notes,Public School Status,Application System,In-State Acceptance Rate %,Out-of-State Acceptance Rate %,In-State Advantage,Match Score
-University of Alabama School of Medicine,AL,MD,3.83,509,494,Public,AMCAS,,,,
+University of Alabama School of Medicine,AL,MD,3.83,509,494,Public,AMCAS,36.28,2.36,huge,100.0
 University of South Alabama College of Medicine,AL,MD,3.85,508,For out-of-state applicants only: 70th percentile (~507.5),Public,AMCAS,,,,
-Alabama College of Osteopathic Medicine,AL,DO,3.45,503,NR,Private,AACOMAS,,,,
+Alabama College of Osteopathic Medicine,AL,DO,3.45,503,NR,Private,AACOMAS,7.58,4.34,modest,78.0
 Edward Via College of Osteopathic Medicine – Auburn Campus,AL,DO,3.67,502,494,Private,AACOMAS,,,,
-Arkansas College of Osteopathic Medicine,AR,DO,3.5+,500+,NR,Private,AACOMAS,,,,
-University of Arizona College of Medicine - Tucson,AZ,MD,3.74,508,498,Public,AMCAS,,,unknown,85.0
-University of Arizona School of Medicine - Phoenix,AZ,MD,3.80,516,495,Public,AMCAS,,,unknown,87.0
-Mayo Clinic Alix School of Medicine,AZ,MD,3.94,521,508,Private,AMCAS,,,,
-A.T. Still University School of Osteopathic Medicine Arizona (SOMA),AZ,DO,3.50,502,NR,Private,AACOMAS,,,,
-Arizona College of Osteopathic Medicine of Midwestern University,AZ,DO,3.54,505,NR,Private,AACOMAS,,,,
+Arkansas College of Osteopathic Medicine,AR,DO,3.5+,500+,NR,Private,AACOMAS,43.19,3.25,huge,110.0
+University of Arizona College of Medicine - Tucson,AZ,MD,3.74,508,498,Public,AMCAS,17.83,1.13,huge,125.0
+University of Arizona School of Medicine - Phoenix,AZ,MD,3.80,516,495,Public,AMCAS,,,unknown,100.0
+Mayo Clinic Alix School of Medicine,AZ,MD,3.94,521,508,Private,AMCAS,4.81,4.0,none,110.0
+A.T. Still University School of Osteopathic Medicine Arizona (SOMA),AZ,DO,3.50,502,NR,Private,AACOMAS,6.76,4.0,modest,76.0
+Arizona College of Osteopathic Medicine of Midwestern University,AZ,DO,3.54,505,NR,Private,AACOMAS,,,huge,82.0
 California Northstate University College of Medicine,CA,MD,3.77,512,497,Private,AMCAS,,,unknown,100.0
 California University of Science and Medicine,CA,MD,3.61,511,NR,Private,AMCAS,,,unknown,100.0
-Drew/UCLA Joint Medical Program Drew University of Medicine and ScienceNote: This joint Program has been discontinued. Drew now has its own MD program.,CA,MD,3.42,NR,NR,Private,AMCAS,,,,
+Drew/UCLA Joint Medical Program Drew University of Medicine and ScienceNote: This joint Program has been discontinued. Drew now has its own MD program.,CA,MD,3.42,NR,NR,Private,AMCAS,,,unknown,97.0
 Loma Linda University School of Medicine,CA,MD,3.84,509,NR,Private,AMCAS,,,unknown,100.0
-University of California – Davis School of Medicine,CA,MD,3.58,509,NR,Public,AMCAS,5.09,0.0,huge,94.0
-Stanford University School of Medicine,CA,MD,3.89,519,NR,Private,AMCAS,,,unknown,100.0
-University of California – Irvine School of Medicine,CA,MD,3.89,516,NR,Public,AMCAS,3.86,2.32,modest,94.0
-University of California – Los Angeles David Geffen School of Medicine,CA,MD,3.81,516,NR,Public,AMCAS,2.92,3.0,none,97.0
-University of California – Riverside School of Medicine,CA,MD,3.60,508,NR,Public,AMCAS,3.12,0.0,huge,95.0
-University of California – San Diego School of Medicine,CA,MD,3.81,514.1,NR,Public,AMCAS,4.16,2.0,material,95.0
-University of California – San Francisco School of Medicine,CA,MD,3.87,517,NR,Public,AMCAS,3.96,2.46,modest,96.0
-University of Southern California Keck School of Medicine,CA,MD,3.85,517,NR,Private,AMCAS,,,,
-Kaiser Permanente School of Medicine,CA,MD,3.84,515,NR,Private,AMCAS,,,,
-Touro University California College of Osteopathic Medicine,CA,DO,3.58,506,NR,Private,AACOMAS,,,,
-Western University of Health Sciences College of Osteopathic Medicine of the Pacific,CA,DO,3.66,508,NR,Private,AACOMAS,,,,
-California Health Sciences University College of Osteopathic Medicine,CA,DO,3.54,504.1,498,Private,AACOMAS,,,,
-University of Colorado School of Medicine,CO,MD,3.7,517,NR,Public,AMCAS,15.06,3.0,huge,100.0
-Rocky Vista University College of Osteopathic Medicine,CO,DO,3.61,506,NR,Private,AACOMAS,,,,
-Quinnipiac University Frank H. Netter MD School of Medicine,CT,MD,3.70,511,NR,Private,AMCAS,,,,
-University of Connecticut School of Medicine,CT,MD,3.76,513,NR,Public,AMCAS,28.09,2.0,huge,100.0
-Yale School of Medicine,CT,MD,3.92,522,NR,Private,AMCAS,4.46,5.0,none,100.0
-George Washington University School of Medicine and Health Sciences,DC,MD,3.72,512,NR,Private,AMCAS,,,unknown,97.0
-Georgetown University School of Medicine,DC,MD,3.76,513,NR,Private,AMCAS,,,unknown,100.0
-Howard University College of Medicine,DC,MD,3.61,507,494,Private,AMCAS,13.16,4.0,modest,100.0
-Florida Atlantic University Charles E. Schmidt College of Medicine,FL,MD,3.81,516,NR,Public,AMCAS,,,,
-Florida International University Herbert Wertheim College of Medicine,FL,MD,3.82,510,NR,Public,AMCAS,9.25,2.3,huge,90.0
-Florida State University College of Medicine,FL,MD,3.68,507,498,Public,AMCAS,,,unknown,100.0
-University of Central Florida College of Medicine,FL,MD,3.89,514,500,Public,AMCAS,7.25,5.3,negligible,100.0
-University of Florida College of Medicine,FL,MD,3.86,515,500,Public,AMCAS,6.94,4.0,negligible,100.0
-University of Miami Miller School of Medicine,FL,MD,3.83,515,NR - (510 for 3-year accelerated path),Private,AMCAS,5.98,2.99,material,71.0
-University of South Florida Health Morsani College of Medicine,FL,MD,3.95,520,NR,Public,AMCAS,7.49,10.0,negligible,74.0
+University of California – Davis School of Medicine,CA,MD,3.58,509,NR,Public,AMCAS,5.09,0.0,huge,125.0
+Stanford University School of Medicine,CA,MD,3.89,519,NR,Private,AMCAS,,,unknown,125.0
+University of California – Irvine School of Medicine,CA,MD,3.89,516,NR,Public,AMCAS,3.86,2.32,modest,125.0
+University of California – Los Angeles David Geffen School of Medicine,CA,MD,3.81,516,NR,Public,AMCAS,2.92,3.0,none,125.0
+University of California – Riverside School of Medicine,CA,MD,3.60,508,NR,Public,AMCAS,3.12,0.0,huge,125.0
+University of California – San Diego School of Medicine,CA,MD,3.81,514.1,NR,Public,AMCAS,4.16,2.0,material,125.0
+University of California – San Francisco School of Medicine,CA,MD,3.87,517,NR,Public,AMCAS,3.96,2.46,modest,125.0
+University of Southern California Keck School of Medicine,CA,MD,3.85,517,NR,Private,AMCAS,6.29,3.0,material,113.0
+Kaiser Permanente School of Medicine,CA,MD,3.84,515,NR,Private,AMCAS,,,unknown,125.0
+Touro University California College of Osteopathic Medicine,CA,DO,3.58,506,NR,Private,AACOMAS,12.71,3.0,material,81.0
+Western University of Health Sciences College of Osteopathic Medicine of the Pacific,CA,DO,3.66,508,NR,Private,AACOMAS,,4.86,unknown,76.0
+California Health Sciences University College of Osteopathic Medicine,CA,DO,3.54,504.1,498,Private,AACOMAS,,,unknown,101.0
+University of Colorado School of Medicine,CO,MD,3.7,517,NR,Public,AMCAS,15.06,3.0,huge,125.0
+Rocky Vista University College of Osteopathic Medicine,CO,DO,3.61,506,NR,Private,AACOMAS,13.02,3.86,material,76.0
+Quinnipiac University Frank H. Netter MD School of Medicine,CT,MD,3.70,511,NR,Private,AMCAS,10.72,5.0,material,93.0
+University of Connecticut School of Medicine,CT,MD,3.76,513,NR,Public,AMCAS,28.09,2.0,huge,125.0
+Yale School of Medicine,CT,MD,3.92,522,NR,Private,AMCAS,4.46,5.0,none,125.0
+George Washington University School of Medicine and Health Sciences,DC,MD,3.72,512,NR,Private,AMCAS,,,unknown,122.0
+Georgetown University School of Medicine,DC,MD,3.76,513,NR,Private,AMCAS,,,unknown,125.0
+Howard University College of Medicine,DC,MD,3.61,507,494,Private,AMCAS,13.16,4.0,modest,125.0
+Florida Atlantic University Charles E. Schmidt College of Medicine,FL,MD,3.81,516,NR,Public,AMCAS,6.94,4.0,negligible,125.0
+Florida International University Herbert Wertheim College of Medicine,FL,MD,3.82,510,NR,Public,AMCAS,9.25,2.3,huge,105.0
+Florida State University College of Medicine,FL,MD,3.68,507,498,Public,AMCAS,,,unknown,125.0
+University of Central Florida College of Medicine,FL,MD,3.89,514,500,Public,AMCAS,7.25,5.3,negligible,125.0
+University of Florida College of Medicine,FL,MD,3.86,515,500,Public,AMCAS,6.78,2.03,material,125.0
+University of Miami Miller School of Medicine,FL,MD,3.83,515,NR - (510 for 3-year accelerated path),Private,AMCAS,5.98,2.99,material,90.0
+University of South Florida Health Morsani College of Medicine,FL,MD,3.95,520,NR,Public,AMCAS,7.49,10.0,negligible,98.0
 Lake Erie College of Osteopathic Medicine Bradenton Campus,FL,DO,3.71,502,NR,Private,AACOMAS,,,,
-Nova Southeastern University Dr. Kiran C. Patel College of Allopathic Medicine,FL,MD,3.75,512,NR,Private,AMCAS,,,,
-Nova Southeastern University Dr. Kiran C. Patel College of Osteopathic Medicine,FL,DO,3.60,506,NR,Private,AACOMAS,,,,
-Emory University School of Medicine,GA,MD,3.81,515.1,NR,Private,AMCAS,12.71,3.0,material,100.0
-Medical College of Georgia at Augusta University,GA,MD,3.80,512,NR,Public,AMCAS,29.41,1.0,huge,100.0
-Mercer University School of Medicine,GA,MD,3.72,503,493–494,Private,AMCAS,,,huge,100.0
-Morehouse School of Medicine,GA,MD,3.64,504.1,NR,Private,AMCAS,,,unknown,100.0
+Nova Southeastern University Dr. Kiran C. Patel College of Allopathic Medicine,FL,MD,3.75,512,NR,Private,AMCAS,,,unknown,76.0
+Nova Southeastern University Dr. Kiran C. Patel College of Osteopathic Medicine,FL,DO,3.60,506,NR,Private,AACOMAS,10.15,4.0,material,75.0
+Emory University School of Medicine,GA,MD,3.81,515.1,NR,Private,AMCAS,29.41,1.0,huge,84.0
+Medical College of Georgia at Augusta University,GA,MD,3.80,512,NR,Public,AMCAS,,,unknown,75.0
+Mercer University School of Medicine,GA,MD,3.72,503,493–494,Private,AMCAS,8.81,6.0,negligible,82.0
+Morehouse School of Medicine,GA,MD,3.64,504.1,NR,Private,AMCAS,,,unknown,125.0
 Georgia Campus Philadelphia College of Osteopathic Medicine,GA,DO,NR,500,NR,Private,AACOMAS,,,,
-University of Hawaii John A. Burns School of Medicine,HI,MD,3.77,512,NR,Public,AMCAS,32.68,1.0,huge,97.0
-University of Iowa Carver College of Medicine,IA,MD,3.81,515,NR,Public,AMCAS,,,,
-Des Moines University College of Osteopathic Medicine,IA,DO,3.71,507,NR,Private,AACOMAS,,,,
+University of Hawaii John A. Burns School of Medicine,HI,MD,3.77,512,NR,Public,AMCAS,32.68,1.0,huge,125.0
+University of Iowa Carver College of Medicine,IA,MD,3.81,515,NR,Public,AMCAS,41.78,5.77,huge,88.0
+Des Moines University College of Osteopathic Medicine,IA,DO,3.71,507,NR,Private,AACOMAS,15.47,0.97,huge,77.0
 Idaho College of Osteopathic Medicine,ID,DO,3.56,503.65,501,Private,AACOMAS,,,,
-Carle Illinois College of Medicine,IL,MD,3.73,513,498,Public,AMCAS,,,unknown,100.0
-Chicago Medical School at Rosalind Franklin University of Medicine and Science,IL,MD,3.76,509,510The school notes most successful applicants have a 510 or above.,Private,AMCAS,,,unknown,82.0
-Loyola University of Chicago Stritch School of Medicine,IL,MD,3.6,510,NR,Private,AMCAS,,,unknown,96.0
-Northwestern University The Feinberg School of Medicine,IL,MD,3.93,520,NR,Private,AMCAS,23.36,3.0,modest,100.0
-Rush Medical College of Rush University,IL,MD,3.67,509,NR,Private,AMCAS,5.34,3.0,modest,84.0
-Southern Illinois University School of Medicine,IL,MD,3.7,508,498,Public,AMCAS,,,unknown,100.0
-University of Chicago Pritzker School of Medicine,IL,MD,3.91,521,NR,Private,AMCAS,,,unknown,100.0
-University of Illinois College of Medicine,IL,MD,3.70,511,NR,Public,AMCAS,17.96,4.0,huge,100.0
-Chicago College of Osteopathic Medicine of Midwestern University,IL,DO,3.65,508,NR,Private,AACOMAS,,,,
-Indiana University School of Medicine,IN,MD,3.8,511,NR,Public,AMCAS,47.08,5.47,huge,100.0
-Marian University College of Osteopathic Medicine,IN,DO,3.71,502,491,Private,AACOMAS,,,,
-University of Kansas School of Medicine,KS,MD,3.84,509,NR,Public,AMCAS,43.19,3.25,huge,100.0
+Carle Illinois College of Medicine,IL,MD,3.73,513,498,Public,AMCAS,,,unknown,125.0
+Chicago Medical School at Rosalind Franklin University of Medicine and Science,IL,MD,3.76,509,510The school notes most successful applicants have a 510 or above.,Private,AMCAS,,,unknown,125.0
+Loyola University of Chicago Stritch School of Medicine,IL,MD,3.6,510,NR,Private,AMCAS,,,unknown,121.0
+Northwestern University The Feinberg School of Medicine,IL,MD,3.93,520,NR,Private,AMCAS,23.36,3.0,modest,125.0
+Rush Medical College of Rush University,IL,MD,3.67,509,NR,Private,AMCAS,5.34,3.0,modest,125.0
+Southern Illinois University School of Medicine,IL,MD,3.7,508,498,Public,AMCAS,,,unknown,125.0
+University of Chicago Pritzker School of Medicine,IL,MD,3.91,521,NR,Private,AMCAS,,,unknown,125.0
+University of Illinois College of Medicine,IL,MD,3.70,511,NR,Public,AMCAS,17.96,4.0,huge,125.0
+Chicago College of Osteopathic Medicine of Midwestern University,IL,DO,3.65,508,NR,Private,AACOMAS,19.62,7.0,material,73.0
+Indiana University School of Medicine,IN,MD,3.8,511,NR,Public,AMCAS,47.08,5.47,huge,125.0
+Marian University College of Osteopathic Medicine,IN,DO,3.71,502,491,Private,AACOMAS,37.71,0.84,huge,71.0
+University of Kansas School of Medicine,KS,MD,3.84,509,NR,Public,AMCAS,60.63,1.57,huge,110.0
 Kansas College of Osteopathic Medicine,KS,DO,3.0 Minimum for consideration,NR,500,Private,AACOMAS,,,,
-University of Kentucky College of Medicine,KY,MD,3.82,506,495,Public,AMCAS,40.21,2.0,huge,100.0
-University of Louisville School of Medicine,KY,MD,3.73,508,NR,Public,AMCAS,40.47,2.0,huge,100.0
+University of Kentucky College of Medicine,KY,MD,3.82,506,495,Public,AMCAS,40.21,2.0,huge,125.0
+University of Louisville School of Medicine,KY,MD,3.73,508,NR,Public,AMCAS,40.47,2.0,huge,125.0
 University of Pikeville Kentucky College of Osteopathic Medicine,KY,DO,3.50,502,NR,Private,AACOMAS,,,,
-Louisiana State University – New Orleans School of Medicine,LA,MD,3.76,509 (74th %-ile),NR,Public,AMCAS,,,unknown,78.0
-Louisiana State University – Shreveport School of Medicine,LA,MD,3.77,507,NR,Public,AMCAS,,,unknown,78.0
-Tulane University School of Medicine,LA,MD,3.61,509,NR,Private,AMCAS,,,unknown,100.0
+Louisiana State University – New Orleans School of Medicine,LA,MD,3.76,509 (74th %-ile),NR,Public,AMCAS,,,unknown,93.0
+Louisiana State University – Shreveport School of Medicine,LA,MD,3.77,507,NR,Public,AMCAS,,,unknown,93.0
+Tulane University School of Medicine,LA,MD,3.61,509,NR,Private,AMCAS,17.38,4.0,huge,82.0
 Edward Via College of Osteopathic Medicine – Louisiana Campus,LA,DO,3.67 (min 3.4),502,496,Private,AACOMAS,,,,
-Boston University School of Medicine,MA,MD,3.74,517,NR,Private,AMCAS,6.76,4.0,modest,100.0
-Harvard Medical School,MA,MD,3.90,520.42,NR,Private,AMCAS,,,unknown,100.0
-Tufts University School of Medicine,MA,MD,3.81,514,NR,Private,AMCAS,10.15,4.0,material,100.0
-University of Massachusetts Medical School,MA,MD,3.87,512,NR,Public,AMCAS,20.2,6.0,material,89.0
-Johns Hopkins University School of Medicine,MD,MD,3.92,521,NR,Private,AMCAS,6.57,6.0,none,100.0
-Uniformed Services University of the Health Sciences F. Edward Hebert School of Medicine,MD,MD,3.70,511,496,Public,AMCAS,,,unknown,100.0
-University of Maryland School of Medicine,MD,MD,3.76,513,NR,Public,AMCAS,10.64,2.0,huge,100.0
+Boston University School of Medicine,MA,MD,3.74,517,NR,Private,AMCAS,,,unknown,82.0
+Harvard Medical School,MA,MD,3.90,520.42,NR,Private,AMCAS,,,unknown,125.0
+Tufts University School of Medicine,MA,MD,3.81,514,NR,Private,AMCAS,22.33,6.0,material,84.0
+University of Massachusetts Medical School,MA,MD,3.87,512,NR,Public,AMCAS,20.2,6.0,material,104.0
+Johns Hopkins University School of Medicine,MD,MD,3.92,521,NR,Private,AMCAS,6.57,6.0,none,125.0
+Uniformed Services University of the Health Sciences F. Edward Hebert School of Medicine,MD,MD,3.70,511,496,Public,AMCAS,,,unknown,125.0
+University of Maryland School of Medicine,MD,MD,3.76,513,NR,Public,AMCAS,10.64,2.0,huge,125.0
 University of New England College of Osteopathic Medicine,ME,DO,3.62,502,490,Private,AACOMAS,,,,
-Central Michigan University College of Medicine,MI,MD,3.7,508,NR,Public,AMCAS,,,unknown,100.0
-Michigan State University College of Human Medicine,MI,MD,3.7,507,NR,Public,AMCAS,15.47,0.97,huge,100.0
-Oakland University William Beaumont School of Medicine,MI,MD,3.87,510,NR,Private,AMCAS,,,unknown,100.0
-University of Michigan Medical School,MI,MD,3.84,514 - 515 (90th %-ile),NR,Public,AMCAS,7.65,2.97,material,100.0
-Wayne State University School of Medicine,MI,MD,3.80,514,NR,Public,AMCAS,19.62,7.0,material,100.0
-Western Michigan University School of Medicine,MI,MD,3.81,513,497,Private,AMCAS,,,unknown,85.0
-Michigan State University College of Osteopathic Medicine,MI,DO,3.50–3.70,506–508,NR,Public,AACOMAS,15.47,0.97,huge,87.0
-Mayo Clinic Alix School of Medicine,MN,MD,3.94,521,NR,Private,AMCAS,4.81,4.0,none,100.0
-University of Minnesota Medical School - Twin Cities,MN,MD,3.77,511.1,NR,Public,AMCAS,,,,
+Central Michigan University College of Medicine,MI,MD,3.7,508,NR,Public,AMCAS,,,unknown,125.0
+Michigan State University College of Human Medicine,MI,MD,3.7,507,NR,Public,AMCAS,7.65,2.97,material,77.0
+Oakland University William Beaumont School of Medicine,MI,MD,3.87,510,NR,Private,AMCAS,,,unknown,125.0
+University of Michigan Medical School,MI,MD,3.84,514 - 515 (90th %-ile),NR,Public,AMCAS,,,unknown,77.0
+Wayne State University School of Medicine,MI,MD,3.80,514,NR,Public,AMCAS,,,unknown,96.0
+Western Michigan University School of Medicine,MI,MD,3.81,513,497,Private,AMCAS,49.21,2.0,huge,75.0
+Michigan State University College of Osteopathic Medicine,MI,DO,3.50–3.70,506–508,NR,Public,AACOMAS,8.44,5.0,modest,67.0
+Mayo Clinic Alix School of Medicine,MN,MD,3.94,521,NR,Private,AMCAS,,,,
+University of Minnesota Medical School - Twin Cities,MN,MD,3.77,511.1,NR,Public,AMCAS,28.29,3.0,huge,125.0
 University of Minnesota Medical School - Duluth,MN,MD,3.77,511.1,495,Public,AMCAS,,,,
-University of Missouri – Columbia School of Medicine,MO,MD,3.83,509,494,Public,AMCAS,29.41,2.88,huge,89.0
-Saint Louis University School of Medicine,MO,MD,3.89,513,NR,Private,AMCAS,22.33,6.0,material,100.0
-University of Missouri – Kansas City School of Medicine,MO,MD,3.943.5 Minimum required for OOS applicants. 3.0 minimum for IS applicants.,495Minimum required for consideration,495,Public,AMCAS,27.27,5.42,huge,90.0
-Washington University School of Medicine,MO,MD,3.88,519.5,NR,Private,AMCAS,,,unknown,76.0
+University of Missouri – Columbia School of Medicine,MO,MD,3.83,509,494,Public,AMCAS,29.41,2.88,huge,115.0
+Saint Louis University School of Medicine,MO,MD,3.89,513,NR,Private,AMCAS,,,unknown,88.0
+University of Missouri – Kansas City School of Medicine,MO,MD,3.943.5 Minimum required for OOS applicants. 3.0 minimum for IS applicants.,495Minimum required for consideration,495,Public,AMCAS,27.27,5.42,huge,115.0
+Washington University School of Medicine,MO,MD,3.88,519.5,NR,Private,AMCAS,20.66,1.0,huge,110.0
 A.T. Still University of Health Sciences Kirksville College of Osteopathic Medicine,MO,DO,3.65,502,NR,Private,AACOMAS,,,,
-Kansas City University of Medicine and Biosciences College of Osteopathic Medicine,MO,DO,3.62,505,NR,Private,AACOMAS,,,,
-University of Mississippi School of Medicine,MS,MD,3.77,505,496,Public,AMCAS,,,huge,100.0
-William Carey University College of Osteopathic Medicine,MS,DO,3.53,505,NR,Private,AACOMAS,,,,
-Duke University School of Medicine,NC,MD,3.90,519,NR,Private,AMCAS,,,unknown,100.0
-East Carolina University Brody School of Medicine,NC,MD,3.63,508,NR,Public,AMCAS,15.5,,huge,74.0
-University of North Carolina at Chapel Hill School of Medicine,NC,MD,3.79,512,NR,Public,AMCAS,21.64,2.0,huge,100.0
-Wake Forest School of Medicine,NC,MD,3.83,511,NR,Private,AMCAS,8.63,1.64,huge,100.0
+Kansas City University of Medicine and Biosciences College of Osteopathic Medicine,MO,DO,3.62,505,NR,Private,AACOMAS,,,unknown,73.0
+University of Mississippi School of Medicine,MS,MD,3.77,505,496,Public,AMCAS,,,huge,125.0
+William Carey University College of Osteopathic Medicine,MS,DO,3.53,505,NR,Private,AACOMAS,58.54,4.46,huge,66.0
+Duke University School of Medicine,NC,MD,3.90,519,NR,Private,AMCAS,15.5,,huge,88.0
+East Carolina University Brody School of Medicine,NC,MD,3.63,508,NR,Public,AMCAS,3.2,0.44,huge,66.0
+University of North Carolina at Chapel Hill School of Medicine,NC,MD,3.79,512,NR,Public,AMCAS,21.64,2.0,huge,125.0
+Wake Forest School of Medicine,NC,MD,3.83,511,NR,Private,AMCAS,8.63,1.64,huge,125.0
 Campbell University Jerry M. Wallace School of Osteopathic Medicine,NC,DO,3.61,505,NR,Private,AACOMAS,,,,
-University of North Dakota School of Medicine and Health Sciences,ND,MD,3.80,507,NR,Public,AMCAS,,,unknown,100.0
-Creighton University School of Medicine,NE,MD,3.87,513,NR,Private,AMCAS,,,unknown,100.0
-University of Nebraska Medical Center College of Medicine,NE,MD,3.75,515,NR,Private,AMCAS,46.92,3.0,huge,100.0
-Geisel School of Medicine at Dartmouth,NH,MD,3.81,514,NR,Private,AMCAS,,,,
-Cooper Medical School of Rowan University,NJ,MD,3.77,511,NR,Public,AMCAS,11.96,2.37,huge,100.0
-Rutgers New Jersey Medical School,NJ,MD,3.70,515,NR,Public,AMCAS,17.37,2.0,huge,100.0
-Rutgers Robert Wood Johnson Medical School,NJ,MD,3.70,514,NR,Public,AMCAS,17.64,2.0,huge,100.0
-Hackensack Meridian School of Medicine,NJ,MD,3.8,514,NR,Private,AMCAS,,,,
-Rowan University School of Osteopathic Medicine,NJ,DO,3.60,507,NR,Public,AACOMAS,,,,
-University of New Mexico School of Medicine,NM,MD,3.76,505,494,Public,AMCAS,53.3,1.0,huge,100.0
+University of North Dakota School of Medicine and Health Sciences,ND,MD,3.80,507,NR,Public,AMCAS,,,unknown,125.0
+Creighton University School of Medicine,NE,MD,3.87,513,NR,Private,AMCAS,,,unknown,70.0
+University of Nebraska Medical Center College of Medicine,NE,MD,3.75,515,NR,Private,AMCAS,46.92,3.0,huge,125.0
+Geisel School of Medicine at Dartmouth,NH,MD,3.81,514,NR,Private,AMCAS,8.7,3.0,modest,104.0
+Cooper Medical School of Rowan University,NJ,MD,3.77,511,NR,Public,AMCAS,11.96,2.37,huge,125.0
+Rutgers New Jersey Medical School,NJ,MD,3.70,515,NR,Public,AMCAS,17.37,2.0,huge,125.0
+Rutgers Robert Wood Johnson Medical School,NJ,MD,3.70,514,NR,Public,AMCAS,17.64,2.0,huge,125.0
+Hackensack Meridian School of Medicine,NJ,MD,3.8,514,NR,Private,AMCAS,18.18,6.0,material,120.0
+Rowan University School of Osteopathic Medicine,NJ,DO,3.60,507,NR,Public,AACOMAS,,,unknown,70.0
+University of New Mexico School of Medicine,NM,MD,3.76,505,494,Public,AMCAS,53.3,1.0,huge,125.0
 Burrell College of Osteopathic Medicine at New Mexico State University,NM,DO,3.48,500,493,Private,AACOMAS,,,,
-University of Nevada Reno School of Medicine,NV,MD,3.68,509,500,Public,AMCAS,29.17,1.0,huge,100.0
+University of Nevada Reno School of Medicine,NV,MD,3.68,509,500,Public,AMCAS,29.17,1.0,huge,125.0
 University of Nevada Las Vegas School of Medicine,NV,MD,3.6-3.7,510,NR,Public,AMCAS,,,,
-Touro University – Nevada College of Osteopathic Medicine,NV,DO,3.54,506.9,500,Private,AACOMAS,,,,
-Albany Medical College,NY,MD,3.77,512,NR,Private,AMCAS,,,,
-Albert Einstein College of Medicine,NY,MD,3.82,516,NR,Private,AMCAS,7.32,3.0,material,100.0
-Columbia University College of Physicians and Surgeons,NY,MD,3.90,522,NR,Private,AMCAS,,,unknown,89.0
-Hofstra Northwell School of Medicine,NY,MD,3.86,518,NR,Private,AMCAS,,,,
-Icahn School of Medicine at Mount Sinai,NY,MD,3.81,519,NR,Private,AMCAS,,,unknown,95.0
-New York Medical College,NY,MD,3.60,515,NR,Private,AMCAS,17.57,4.0,huge,100.0
-New York University Grossman School of Medicine,NY,MD,3.98,523,NR,Private,AMCAS,,,,
-New York University Long Island School of Medicine,NY,MD,3.94,516,NR,Private,AMCAS,,,,
-SUNY – Downstate Medical Center College of Medicine,NY,MD,3.73,513,NR,Public,AMCAS,,,unknown,97.0
-University at Buffalo Jacobs School of Medicine and Biomedical Sciences,NY,MD,3.70,510,NR,Public,AMCAS,,,,
-SUNY – Upstate Medical University,NY,MD,3.64,509.86,NR,Public,AMCAS,13.64,2.8,huge,72.0
-Stony Brook University School of Medicine,NY,MD,3.93,516 (92nd %-ile),NR,Public,AMCAS,,,,
-University of Rochester School of Medicine and Dentistry,NY,MD,3.60,517,NR,Private,AMCAS,6.07,6.0,none,95.0
+Touro University – Nevada College of Osteopathic Medicine,NV,DO,3.54,506.9,500,Private,AACOMAS,,,unknown,63.0
+Albany Medical College,NY,MD,3.77,512,NR,Private,AMCAS,13.64,2.8,huge,82.0
+Albert Einstein College of Medicine,NY,MD,3.82,516,NR,Private,AMCAS,7.32,3.0,material,125.0
+Columbia University College of Physicians and Surgeons,NY,MD,3.90,522,NR,Private,AMCAS,,,unknown,104.0
+Hofstra Northwell School of Medicine,NY,MD,3.86,518,NR,Private,AMCAS,12.54,6.0,material,80.0
+Icahn School of Medicine at Mount Sinai,NY,MD,3.81,519,NR,Private,AMCAS,,,unknown,121.0
+New York Medical College,NY,MD,3.60,515,NR,Private,AMCAS,17.57,4.0,huge,125.0
+New York University Grossman School of Medicine,NY,MD,3.98,523,NR,Private,AMCAS,,,unknown,98.0
+New York University Long Island School of Medicine,NY,MD,3.94,516,NR,Private,AMCAS,6.72,4.0,modest,77.0
+SUNY – Downstate Medical Center College of Medicine,NY,MD,3.73,513,NR,Public,AMCAS,,,unknown,125.0
+University at Buffalo Jacobs School of Medicine and Biomedical Sciences,NY,MD,3.70,510,NR,Public,AMCAS,13.84,1.52,huge,112.0
+SUNY – Upstate Medical University,NY,MD,3.64,509.86,NR,Public,AMCAS,,,unknown,70.0
+Stony Brook University School of Medicine,NY,MD,3.93,516 (92nd %-ile),NR,Public,AMCAS,15.5,4.0,material,125.0
+University of Rochester School of Medicine and Dentistry,NY,MD,3.60,517,NR,Private,AMCAS,6.07,6.0,none,120.0
 Weill Cornell Medical College,NY,MD,3.90,518,NR,Private,AMCAS,,,,
 New York Institute of Technology College of Osteopathic Medicine,NY,DO,3.62,506,NR,Private,AACOMAS,,,,
 Touro College of Osteopathic Medicine - Middletown Campus,NY,DO,3.48,502.68,498,Private,AACOMAS,,,,
 Touro College of Osteopathic Medicine - Harlem Campus,NY,DO,3.47,506.75,498,Private,AACOMAS,,,,
-Case Western Reserve University School of Medicine,OH,MD,3.87,518,NR,Private,AMCAS,8.81,6.0,negligible,100.0
-Northeast Ohio Medical University,OH,MD,3.74,515,NR,Public,AMCAS,3.2,0.44,huge,100.0
-The Ohio State University College of Medicine,OH,MD,3.82,514,NR,Public,AMCAS,13.02,3.86,material,91.0
-The University of Toledo College of Medicine and Life Sciences,OH,MD,3.77,509,NR,Public,AMCAS,,,,
-University of Cincinnati College of Medicine,OH,MD,3.78,512,NR,Public,AMCAS,14.4,4.04,material,100.0
-Wright State University Boonshoft School of Medicine,OH,MD,3.68,508.76,NR,Public,AMCAS,24.18,2.73,huge,100.0
+Case Western Reserve University School of Medicine,OH,MD,3.87,518,NR,Private,AMCAS,24.18,2.73,huge,71.0
+Northeast Ohio Medical University,OH,MD,3.74,515,NR,Public,AMCAS,27.6,1.0,huge,66.0
+The Ohio State University College of Medicine,OH,MD,3.82,514,NR,Public,AMCAS,,,huge,80.0
+The University of Toledo College of Medicine and Life Sciences,OH,MD,3.77,509,NR,Public,AMCAS,22.72,5.09,huge,125.0
+University of Cincinnati College of Medicine,OH,MD,3.78,512,NR,Public,AMCAS,14.4,4.04,material,125.0
+Wright State University Boonshoft School of Medicine,OH,MD,3.68,508.76,NR,Public,AMCAS,,,,
 Ohio University Heritage College of Osteopathic Medicine,OH,DO,3.68,503.49,NR,Public,AACOMAS,,,,
-University of Oklahoma College of Medicine,OK,MD,3.81,510,492,Public,AMCAS,57.19,1.76,huge,100.0
-Oklahoma State University Center for Health Sciences College of Osteopathic Medicine,OK,DO,3.60,500,492,Public,AACOMAS,,,,
-Oregon Health & Science University School of Medicine,OR,MD,3.69,509,497,Public,AMCAS,27.6,1.0,huge,94.0
+University of Oklahoma College of Medicine,OK,MD,3.81,510,492,Public,AMCAS,57.19,1.76,huge,125.0
+Oklahoma State University Center for Health Sciences College of Osteopathic Medicine,OK,DO,3.60,500,492,Public,AACOMAS,31.55,2.74,huge,68.0
+Oregon Health & Science University School of Medicine,OR,MD,3.69,509,497,Public,AMCAS,,,,
 Western University of Health Sciences College of Osteopathic Medicine of the Pacific Northwest,OR,DO,3.62,507,NR,Private,AACOMAS,,,,
-Drexel University College of Medicine,PA,MD,3.69,511,NR,Private,AMCAS,,4.86,unknown,100.0
-Geisinger Commonwealth School of Medicine,PA,MD,3.82,511.82,NR,Private,AMCAS,24.77,3.48,huge,100.0
-Pennsylvania State University College of Medicine,PA,MD,3.75,511,NR,Public,AMCAS,,,unknown,100.0
-Perelman School of Medicine University of Pennsylvania,PA,MD,3.94,521.8,NR,Private,AMCAS,,,unknown,94.0
-Sidney Kimmel Medical College at Thomas Jefferson University,PA,MD,3.78,514,NR,Private,AMCAS,10.08,3.0,material,100.0
+Drexel University College of Medicine,PA,MD,3.69,511,NR,Private,AMCAS,10.08,3.0,material,86.0
+Geisinger Commonwealth School of Medicine,PA,MD,3.82,511.82,NR,Private,AMCAS,24.77,3.48,huge,125.0
+Pennsylvania State University College of Medicine,PA,MD,3.75,511,NR,Public,AMCAS,,,,
+Perelman School of Medicine University of Pennsylvania,PA,MD,3.94,521.8,NR,Private,AMCAS,21.6,3.0,huge,70.0
+Sidney Kimmel Medical College at Thomas Jefferson University,PA,MD,3.78,514,NR,Private,AMCAS,,,,
 Temple University Lewis Katz School of Medicine,PA,MD,3.76,513,NR,Public,AMCAS,,,,
-University of Pittsburgh School of Medicine,PA,MD,3.83,515,NR,Public,AMCAS,9.4,3.0,material,100.0
+University of Pittsburgh School of Medicine,PA,MD,3.83,515,NR,Public,AMCAS,9.4,3.0,material,125.0
 Lake Erie College of Osteopathic Medicine,PA,DO,3.41,503,NR,Private,AACOMAS,,,,
 Philadelphia College of Osteopathic Medicine,PA,DO,3.50,505,NR,Private,AACOMAS,,,,
-Ponce School of Medicine and Health Sciences,PR,MD,3.50,499,494,Private,AMCAS,,,,
-San Juan Bautista School of Medicine,PR,MD,3.57,499,492,Private,AMCAS,,,unknown,100.0
-Universidad Central Del Caribe School of Medicine,PR,MD,3.80,501,495,Private,AMCAS,,,unknown,100.0
-University of Puerto Rico School of Medicine,PR,MD,3.81,505,495,Public,AMCAS,,,unknown,100.0
-Brown University The Warren Alpert Medical School,RI,MD,3.83,516,NR,Private,AMCAS,17.93,3.0,huge,85.0
-Medical University of South Carolina College of Medicine,SC,MD,3.86,511,500,Public,AMCAS,37.71,0.84,huge,100.0
-University of South Carolina School of Medicine – Columbia,SC,MD,3.78,508,NR,Public,AMCAS,35.17,2.24,huge,98.0
-University of South Carolina School of Medicine – Greenville,SC,MD,3.7–3.75,511,NR,Public,AMCAS,31.01,4.0,huge,98.0
+Ponce School of Medicine and Health Sciences,PR,MD,3.50,499,494,Private,AMCAS,18.4,2.0,huge,82.0
+San Juan Bautista School of Medicine,PR,MD,3.57,499,492,Private,AMCAS,,,unknown,125.0
+Universidad Central Del Caribe School of Medicine,PR,MD,3.80,501,495,Private,AMCAS,,,unknown,125.0
+University of Puerto Rico School of Medicine,PR,MD,3.81,505,495,Public,AMCAS,,,unknown,125.0
+Brown University The Warren Alpert Medical School,RI,MD,3.83,516,NR,Private,AMCAS,17.93,3.0,huge,117.0
+Medical University of South Carolina College of Medicine,SC,MD,3.86,511,500,Public,AMCAS,35.17,2.24,huge,74.0
+University of South Carolina School of Medicine – Columbia,SC,MD,3.78,508,NR,Public,AMCAS,31.01,4.0,huge,96.0
+University of South Carolina School of Medicine – Greenville,SC,MD,3.7–3.75,511,NR,Public,AMCAS,,,,
 Edward Via College of Osteopathic Medicine – Carolinas Campus,SC,DO,3.70,500-506,496,Private,AACOMAS,,,,
-University of South Dakota Sanford School of Medicine,SD,MD,3.79,508.5,496,Public,AMCAS,,,unknown,100.0
-East Tennessee State University Quillen College of Medicine,TN,MD,3.78,510,NR,Public,AMCAS,,,,
-Meharry Medical College School of Medicine,TN,MD,3.46,503,NR,Private,AMCAS,,,unknown,100.0
-University of Tennessee Health Science Center College of Medicine,TN,MD,3.83,511,NR,Public,AMCAS,31.55,2.74,huge,100.0
-Vanderbilt University School of Medicine,TN,MD,3.5-4.0,509-528,NR,Private,AMCAS,8.44,5.0,modest,100.0
-Lincoln Memorial University DeBusk College of Osteopathic Medicine,TN,DO,3.50,499,494,Private,AACOMAS,,,,
-Baylor College of Medicine,TX,MD,3.91,518,NR,Private,TMDSAS,6.55,4.39,negligible,100.0
-TCU and UNTHSC School of Medicine,TX,MD,3.74,511,NR,Private,AMCAS,,,,
+University of South Dakota Sanford School of Medicine,SD,MD,3.79,508.5,496,Public,AMCAS,,,unknown,125.0
+East Tennessee State University Quillen College of Medicine,TN,MD,3.78,510,NR,Public,AMCAS,21.11,1.0,huge,92.0
+Meharry Medical College School of Medicine,TN,MD,3.46,503,NR,Private,AMCAS,,,unknown,125.0
+University of Tennessee Health Science Center College of Medicine,TN,MD,3.83,511,NR,Public,AMCAS,,,,
+Vanderbilt University School of Medicine,TN,MD,3.5-4.0,509-528,NR,Private,AMCAS,13.59,4.67,material,73.0
+Lincoln Memorial University DeBusk College of Osteopathic Medicine,TN,DO,3.50,499,494,Private,AACOMAS,,,unknown,67.0
+Baylor College of Medicine,TX,MD,3.91,518,NR,Private,TMDSAS,6.55,4.39,negligible,125.0
+TCU and UNTHSC School of Medicine,TX,MD,3.74,511,NR,Private,AMCAS,,,unknown,65.0
 Texas A&M Health Science Center College of Medicine,TX,MD,3.86,512,NR,Public,TMDSAS,,,,
 Texas Tech University Health Sciences Center Paul L. Foster School of Medicine,TX,MD,3.85,509,NR,Public,TMDSAS,,,,
 Texas Tech University Health Sciences Center School of Medicine – Lubbock,TX,MD,3.85,509,NR,Public,TMDSAS,,,,
@@ -186,18 +186,18 @@ University of the Incarnate Word School of Osteopathic Medicine,TX,DO,3.60,504,N
 University of North Texas Health Science Center at Fort Worth Texas College of Osteopathic Medicine,TX,DO,3.81,507,NR,Private,TMDSAS,,,,
 University of Utah School of Medicine,UT,MD,3.87,514,500,Public,AMCAS,,,,
 Noorda College of Osteopathic Medicine,UT,DO,3.39,502,500,Private,AACOMAS,,,,
-Eastern Virginia Medical School,VA,MD,3.60,513,NR,Public,AMCAS,12.1,3.0,material,100.0
-Virginia Commonwealth University School of Medicine,VA,MD,3.79,512,NR,Public,AMCAS,13.59,4.67,material,100.0
-Virginia Tech Carilion School of Medicine and Research Institute,VA,MD,3.65,512,NR,Public,AMCAS,,,,
-University of Virginia School of Medicine,VA,MD,3.85,517,NR,Public,AMCAS,15.88,10.0,modest,100.0
+Eastern Virginia Medical School,VA,MD,3.60,513,NR,Public,AMCAS,12.1,3.0,material,125.0
+Virginia Commonwealth University School of Medicine,VA,MD,3.79,512,NR,Public,AMCAS,15.88,10.0,modest,125.0
+Virginia Tech Carilion School of Medicine and Research Institute,VA,MD,3.65,512,NR,Public,AMCAS,2.14,2.0,none,125.0
+University of Virginia School of Medicine,VA,MD,3.85,517,NR,Public,AMCAS,,,,
 Edward Via College of Osteopathic Medicine – Virginia Campus,VA,DO,3.60,502,495,Private,AACOMAS,,,,
 Liberty University College of Osteopathic Medicine,VA,DO,3.6,504,501,Private,AACOMAS,,,,
 The University of Vermont Larner College of Medicine,VT,MD,3.70,512,NR,Public,AMCAS,,,,
-University of Washington School of Medicine,WA,MD,3.7,511,NR,Public,AMCAS,20.66,1.0,huge,100.0
-Washington State University Elson S. Floyd College of Medicine,WA,MD,3.65,509,NR,Public,AMCAS,,,huge,100.0
+University of Washington School of Medicine,WA,MD,3.7,511,NR,Public,AMCAS,,,,
+Washington State University Elson S. Floyd College of Medicine,WA,MD,3.65,509,NR,Public,AMCAS,,,,
 Pacific Northwestern University of Health Sciences College of Osteopathic Medicine,WA,DO,3.60,502,NR,Private,AACOMAS,,,,
-Marshall University Joan C. Edwards School of Medicine,WV,MD,3.8,504,496,Public,AMCAS,56.95,2.0,huge,100.0
-West Virginia University School of Medicine,WV,MD,3.76,510,NR,Public,AMCAS,49.21,2.0,huge,100.0
+Marshall University Joan C. Edwards School of Medicine,WV,MD,3.8,504,496,Public,AMCAS,56.95,2.0,huge,125.0
+West Virginia University School of Medicine,WV,MD,3.76,510,NR,Public,AMCAS,,,,
 West Virginia School of Osteopathic Medicine,WV,DO,3.53,502,495,Public,AACOMAS,,,,
-Medical College of Wisconsin,WI,MD,3.78,510,NR,Private,AMCAS,,,unknown,100.0
-University of Wisconsin School of Medicine and Public Health,WI,MD,3.77,510,NR,Public,AMCAS,18.4,2.0,huge,100.0
+Medical College of Wisconsin,WI,MD,3.78,510,NR,Private,AMCAS,,,,
+University of Wisconsin School of Medicine and Public Health,WI,MD,3.77,510,NR,Public,AMCAS,,,,

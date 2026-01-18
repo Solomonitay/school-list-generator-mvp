@@ -7,13 +7,29 @@ from fuzzywuzzy import fuzz
 def clean_school_name(name):
     """Clean school names for better matching"""
     name = str(name).strip()
-    # Remove common prefixes/suffixes that might differ
+
+    # Normalize common variations
     name = re.sub(r'\s+', ' ', name)
+    name = re.sub(r'[^\w\s]', ' ', name)  # Replace punctuation with spaces
+    name = re.sub(r'\s+', ' ', name)  # Normalize spaces again
+
+    # Remove common prefixes/suffixes
+    name = re.sub(r'^the\s+', '', name, flags=re.IGNORECASE)
     name = re.sub(r'^university of ', '', name, flags=re.IGNORECASE)
+    name = re.sub(r'^college of ', '', name, flags=re.IGNORECASE)
     name = re.sub(r' college of medicine$', '', name, flags=re.IGNORECASE)
     name = re.sub(r' school of medicine$', '', name, flags=re.IGNORECASE)
     name = re.sub(r' medical college$', '', name, flags=re.IGNORECASE)
+    name = re.sub(r' medical school$', '', name, flags=re.IGNORECASE)
+    name = re.sub(r' school of medicine and science$', '', name, flags=re.IGNORECASE)
+    name = re.sub(r' of medicine$', '', name, flags=re.IGNORECASE)
     name = re.sub(r'\s+school$', '', name, flags=re.IGNORECASE)
+    name = re.sub(r'\s+college$', '', name, flags=re.IGNORECASE)
+
+    # Handle common abbreviations
+    name = re.sub(r'\bmed\b', 'medicine', name, flags=re.IGNORECASE)
+    name = re.sub(r'\buniv\b', 'university', name, flags=re.IGNORECASE)
+
     return name.lower().strip()
 
 def scrape_accepted_data():
@@ -100,8 +116,9 @@ def scrape_accepted_data():
         return None
 
 def match_schools(existing_df, accepted_df):
-    """Match schools between existing data and Accepted.com data"""
+    """Match schools between existing data and Accepted.com data with improved matching"""
     matched_data = []
+    used_matches = set()  # Track which Accepted.com entries have been used
 
     for idx, row in existing_df.iterrows():
         existing_name = row['Medical School Name']
@@ -113,28 +130,55 @@ def match_schools(existing_df, accepted_df):
         # Find best match in Accepted data
         best_match = None
         best_score = 0
+        best_match_idx = -1
 
         for aamc_idx, aamc_row in accepted_df.iterrows():
+            if aamc_idx in used_matches:
+                continue
+
             aamc_name = aamc_row['school_name']
             aamc_state = aamc_row['state']
 
-            # Try exact state match first
+            clean_aamc = clean_school_name(aamc_name)
+
+            # Calculate different matching scores
+            name_score = fuzz.ratio(clean_existing, clean_aamc)
+            partial_score = fuzz.partial_ratio(clean_existing, clean_aamc)
+            token_score = fuzz.token_sort_ratio(clean_existing, clean_aamc)
+
+            # Use the highest of the three scores
+            score = max(name_score, partial_score, token_score)
+
+            # Bonus for state match
             if aamc_state == existing_state:
-                clean_aamc = clean_school_name(aamc_name)
-                score = fuzz.ratio(clean_existing, clean_aamc)
+                score += 15
 
-                if score > best_score:
-                    best_score = score
-                    best_match = aamc_row
+            # Bonus for high partial match (good for long names)
+            if partial_score > 85:
+                score += 10
 
-        # Use match if score is high enough (adjust threshold as needed)
-        if best_match is not None and best_score > 70:
+            if score > best_score:
+                best_score = score
+                best_match = aamc_row
+                best_match_idx = aamc_idx
+
+        # Very lenient matching criteria to maximize coverage
+        partial_ratio = fuzz.partial_ratio(clean_existing, clean_school_name(best_match['school_name']))
+        should_match = (
+            best_score > 60 or  # Good overall match
+            (best_score > 45 and existing_state == best_match['state']) or  # Decent match with state confirmation
+            partial_ratio > 85 or  # Very strong partial match
+            (partial_ratio > 75 and len(clean_existing) > 10 and len(clean_school_name(best_match['school_name'])) > 10)  # Strong partial for longer names
+        )
+
+        if best_match is not None and should_match:
             matched_row = row.copy()
             matched_row['In-State Acceptance Rate %'] = best_match['in_state_acceptance_rate']
             matched_row['Out-of-State Acceptance Rate %'] = best_match['out_state_acceptance_rate']
             matched_row['In-State Advantage'] = best_match['in_state_advantage']
             matched_row['Match Score'] = best_score
             matched_data.append(matched_row)
+            used_matches.add(best_match_idx)  # Mark this match as used
         else:
             # No match found, add with None values
             matched_row = row.copy()
