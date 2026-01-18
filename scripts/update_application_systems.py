@@ -6,7 +6,8 @@ Adds AMCAS, AACOMAS, or TMDSAS designation to each school.
 
 import csv
 
-# Texas schools that use TMDSAS (from the website)
+# Texas schools that use TMDSAS (updated from Shemmassian Consulting - February 2025)
+# Using school names as they appear in our CSV database
 TMDSAS_SCHOOLS = {
     "Baylor College of Medicine",
     "University of Texas School of Medicine at San Antonio",  # Long School of Medicine
@@ -20,13 +21,17 @@ TMDSAS_SCHOOLS = {
     "University of Texas at Austin Dell Medical School",
     "University of Texas Medical Branch School of Medicine",
     "University of Texas Rio Grande Valley School of Medicine",
-    "University of Texas Southwestern Medical School",
-    # Note: UT Tyler is mentioned but may not be in our current dataset
+    "University of Texas Southwestern Medical School"
+    # Note: University of Texas at Tyler School of Medicine not in our current dataset
 }
 
-# Texas schools that don't use TMDSAS
-TEXAS_AMCAS_SCHOOL = "TCU and UNTHSC School of Medicine"
-TEXAS_AACOMAS_SCHOOL = "University of the Incarnate Word School of Osteopathic Medicine"
+# Texas schools that don't use TMDSAS (from Shemmassian Consulting)
+TEXAS_AMCAS_SCHOOLS = [
+    "TCU and UNTHSC School of Medicine"
+]
+TEXAS_AACOMAS_SCHOOLS = [
+    "University of the Incarnate Word School of Osteopathic Medicine"
+]
 
 
 def determine_application_system(school_name, degree_type, state):
@@ -48,9 +53,9 @@ def determine_application_system(school_name, degree_type, state):
 
     # Texas exceptions
     if state == "TX":
-        if "TCU" in school_name or "UNTHSC" in school_name:
+        if any(amcas_school.lower() in school_name.lower() for amcas_school in TEXAS_AMCAS_SCHOOLS):
             return "AMCAS"
-        if "Incarnate Word" in school_name:
+        if any(aacomas_school.lower() in school_name.lower() for aacomas_school in TEXAS_AACOMAS_SCHOOLS):
             return "AACOMAS"
 
     # General rules
@@ -116,8 +121,8 @@ def print_summary(schools_data):
 
 
 def main():
-    input_file = "medical_schools_data.csv"
-    output_file = "medical_schools_data.csv"  # Overwrite the original
+    input_file = "../public/medical_schools_data.csv"
+    output_file = "../public/medical_schools_data.csv"  # Overwrite the original
 
     print("Updating medical schools CSV with application system designations...")
 
