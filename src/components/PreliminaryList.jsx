@@ -171,7 +171,6 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
             <tr>
               <th className="school-cell">School</th>
               <th>Degree</th>
-              <th>Casper</th>
               <th>State</th>
               <th>Avg GPA</th>
               <th>Avg MCAT</th>
@@ -180,6 +179,7 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
               <th>In-State %</th>
               <th>Out-State %</th>
               <th>In-State Advantage</th>
+              <th>Casper</th>
               <th>Classification</th>
               <th>Notes</th>
             </tr>
@@ -206,13 +206,6 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                   <td>
                     <span className="badge degree-badge">{school['Degree Type']}</span>
                   </td>
-                  <td>
-                    {school['Requires Casper'] === 'True' ? (
-                      <span className="badge casper-badge required">Required</span>
-                    ) : (
-                      <span className="badge casper-badge not-required">Not Required</span>
-                    )}
-                  </td>
                   <td className="text-cell">{school.State}</td>
                   <td className="text-cell tabular-nums">{school['Average GPA']}</td>
                   <td className="text-cell tabular-nums">{school['Average MCAT']}</td>
@@ -237,6 +230,13 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                       ? school['In-State Advantage']
                       : 'N/A'
                     }
+                  </td>
+                  <td>
+                    {school['Requires Casper'] === 'True' ? (
+                      <span className="badge casper-badge required">Required</span>
+                    ) : (
+                      <span className="badge casper-badge not-required">Not Required</span>
+                    )}
                   </td>
                   <td>
                     {overallClassification ? (
