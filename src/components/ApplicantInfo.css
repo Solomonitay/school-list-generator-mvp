@@ -22,7 +22,7 @@
 }
 
 .profile-field label {
-  font-size: 0.875rem; /* text-sm */
+  font-size: 0.75rem; /* text-xs */
   font-weight: 600; /* font-semibold */
   color: var(--brand-text);
   margin-bottom: 0.5rem;
