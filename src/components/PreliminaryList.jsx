@@ -171,6 +171,7 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
             <tr>
               <th className="school-cell">School</th>
               <th>Degree</th>
+              <th>Application System</th>
               <th>State</th>
               <th>Avg GPA</th>
               <th>Avg MCAT</th>
@@ -206,6 +207,9 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                   </td>
                   <td>
                     <span className="badge degree-badge">{school['Degree Type']}</span>
+                  </td>
+                  <td>
+                    <span className="badge app-system-badge">{school['Application System']}</span>
                   </td>
                   <td className="text-cell">{school.State}</td>
                   <td className="text-cell tabular-nums">{school['Average GPA']}</td>
