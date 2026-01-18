@@ -6,6 +6,47 @@ import PreliminaryList from './components/PreliminaryList';
 import ResourcesPanel from './components/ResourcesPanel';
 import './App.css';
 
+// Classification functions
+const getResidencyStatus = (schoolState, applicantState) => {
+  if (!applicantState) return null;
+  return schoolState === applicantState ? 'In-State' : 'Out-of-State';
+};
+
+const classifyGPA = (userGPA, schoolAvgGPA) => {
+  if (!userGPA || !schoolAvgGPA) return null;
+  const diff = parseFloat(userGPA) - parseFloat(schoolAvgGPA);
+  if (diff >= 0.2) return 'Undershoot';
+  if (Math.abs(diff) <= 0.1) return 'Target';
+  if (diff <= -0.2) return 'Reach';
+  return null;
+};
+
+const classifyMCAT = (userMCAT, schoolAvgMCAT) => {
+  if (!userMCAT || !schoolAvgMCAT) return null;
+  const diff = parseInt(userMCAT) - parseInt(schoolAvgMCAT);
+  if (diff >= 3) return 'Undershoot';
+  if (Math.abs(diff) <= 2) return 'Target';
+  if (diff <= -3) return 'Reach';
+  return null;
+};
+
+const getOverallClassification = (gpaClass, mcatClass) => {
+  if (!gpaClass || !mcatClass) return null;
+
+  // Rule matrix from Shemmassian methodology
+  if (gpaClass === 'Reach' && mcatClass === 'Reach') return 'Reach';
+  if (gpaClass === 'Target' && mcatClass === 'Target') return 'Target';
+  if (gpaClass === 'Undershoot' && mcatClass === 'Undershoot') return 'Undershoot';
+  if (gpaClass === 'Reach' && mcatClass === 'Undershoot') return 'Target';
+  if (gpaClass === 'Undershoot' && mcatClass === 'Reach') return 'Target';
+  if (gpaClass === 'Target' && mcatClass === 'Reach') return 'Reach';
+  if (gpaClass === 'Target' && mcatClass === 'Undershoot') return 'Undershoot';
+  if (gpaClass === 'Reach' && mcatClass === 'Target') return 'Reach';
+  if (gpaClass === 'Undershoot' && mcatClass === 'Target') return 'Undershoot';
+
+  return null;
+};
+
 function App() {
   const [schools, setSchools] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -163,6 +204,31 @@ function App() {
                       <span className="detail-label">Institution:</span>
                       <span className="detail-value">{selectedSchoolData['Public School Status']}</span>
                     </div>
+
+                    {/* Classification - Always calculated */}
+                    <div className="detail-row">
+                      <span className="detail-label">Your Classification:</span>
+                      <div className="classification-display">
+                        {(() => {
+                          const gpaClass = classifyGPA(applicantData.gpa, selectedSchoolData['Average GPA']);
+                          const mcatClass = classifyMCAT(applicantData.mcat, selectedSchoolData['Average MCAT']);
+                          const overallClassification = getOverallClassification(gpaClass, mcatClass);
+
+                          if (overallClassification) {
+                            return (
+                              <span className={`badge classification-badge ${overallClassification.toLowerCase()}`}>
+                                {overallClassification}
+                              </span>
+                            );
+                          } else if (applicantData.gpa && applicantData.mcat) {
+                            return <span className="badge classification-badge na">Unable to classify</span>;
+                          } else {
+                            return <span className="classification-placeholder">Enter GPA & MCAT above</span>;
+                          }
+                        })()}
+                      </div>
+                    </div>
+
                     <div className="detail-row">
                       <span className="detail-label">International Students:</span>
                       <span className="detail-value">

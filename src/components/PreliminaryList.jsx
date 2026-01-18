@@ -230,8 +230,16 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                       : 'N/A'
                     }
                   </td>
-                  <td className="text-cell">
-                    {overallClassification || 'N/A'}
+                  <td>
+                    {overallClassification ? (
+                      <span className={`badge classification-badge ${overallClassification.toLowerCase()}`}>
+                        {overallClassification}
+                      </span>
+                    ) : applicantData.gpa && applicantData.mcat ? (
+                      <span className="badge classification-badge na">Unable to classify</span>
+                    ) : (
+                      <span className="classification-placeholder">Enter your stats</span>
+                    )}
                   </td>
                   <td className="notes-cell">
                     <input

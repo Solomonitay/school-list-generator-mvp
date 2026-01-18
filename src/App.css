@@ -389,3 +389,14 @@
   font-size: 1.2rem;
   color: var(--brand-text-secondary);
 }
+
+.classification-display {
+  display: flex;
+  align-items: center;
+}
+
+.classification-placeholder {
+  color: var(--brand-text-secondary);
+  font-style: italic;
+  font-size: 0.875rem;
+}
