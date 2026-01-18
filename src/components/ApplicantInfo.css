@@ -124,7 +124,7 @@
   display: flex;
   align-items: center;
   min-height: 2rem;
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   color: var(--brand-text);
 }
 

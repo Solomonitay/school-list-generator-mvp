@@ -592,8 +592,6 @@ function App() {
               )}
             </div>
           </div>
-
-          <ResourcesPanel />
         </aside>
 
         <main className="dashboard-main">
@@ -604,6 +602,10 @@ function App() {
               onRemove={removeFromPreliminaryList}
               applicantData={applicantData}
             />
+          </div>
+
+          <div className="resources-container">
+            <ResourcesPanel />
           </div>
         </main>
         </div>
