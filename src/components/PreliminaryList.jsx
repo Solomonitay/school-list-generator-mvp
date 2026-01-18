@@ -180,6 +180,7 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
               <th>Out-State %</th>
               <th>In-State Advantage</th>
               <th>Casper</th>
+              <th>PREview</th>
               <th>Classification</th>
               <th>Notes</th>
             </tr>
@@ -236,6 +237,13 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                       <span className="badge casper-badge required">Required</span>
                     ) : (
                       <span className="badge casper-badge not-required">Not Required</span>
+                    )}
+                  </td>
+                  <td>
+                    {school['Requires PREview'] !== 'Not Required' ? (
+                      <span className="badge preview-badge required">{school['Requires PREview']}</span>
+                    ) : (
+                      <span className="badge preview-badge not-required">Not Required</span>
                     )}
                   </td>
                   <td>
