@@ -108,6 +108,8 @@
   vertical-align: middle;
   font-size: 0.875rem; /* Consistent base font size */
   color: var(--color-black-panther);
+  font-weight: 400; /* Consistent base font weight */
+  line-height: 1.4; /* Consistent line height */
 }
 
 .schools-table tbody tr {
@@ -252,15 +254,15 @@
   text-align: center;
 }
 
-.numeric {
-  font-family: 'Courier New', monospace;
-  font-weight: 500;
-}
-
 .text-cell {
   font-weight: 400;
   color: var(--color-black-panther);
   line-height: 1.4;
+}
+
+.text-cell.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
 }
 
 .notes-cell {

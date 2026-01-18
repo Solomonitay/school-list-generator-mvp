@@ -207,8 +207,8 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                     <span className="badge degree-badge">{school['Degree Type']}</span>
                   </td>
                   <td className="text-cell">{school.State}</td>
-                  <td className="numeric tabular-nums">{school['Average GPA']}</td>
-                  <td className="numeric tabular-nums">{school['Average MCAT']}</td>
+                  <td className="text-cell tabular-nums">{school['Average GPA']}</td>
+                  <td className="text-cell tabular-nums">{school['Average MCAT']}</td>
                   <td className="text-cell">{school['Minimum MCAT Notes']}</td>
                   {applicantData.state && (
                     <td>
@@ -219,10 +219,10 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                       )}
                     </td>
                   )}
-                  <td className="numeric tabular-nums">
+                  <td className="text-cell tabular-nums">
                     {school['In-State Matriculants %'] ? `${school['In-State Matriculants %']}%` : 'N/A'}
                   </td>
-                  <td className="numeric tabular-nums">
+                  <td className="text-cell tabular-nums">
                     {school['Out-of-State Matriculants %'] ? `${school['Out-of-State Matriculants %']}%` : 'N/A'}
                   </td>
                   <td>
