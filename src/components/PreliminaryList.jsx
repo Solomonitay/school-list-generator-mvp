@@ -48,6 +48,51 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
     return null;
   };
 
+  // Calculate degree type counts
+  const degreeCounts = useMemo(() => {
+    const counts = {
+      all: schools.length,
+      md: schools.filter(s => s['Degree Type'] === 'MD').length,
+      do: schools.filter(s => s['Degree Type'] === 'DO').length
+    };
+    return counts;
+  }, [schools]);
+
+  // Calculate classification counts based on current filter
+  const classificationCounts = useMemo(() => {
+    // First filter by degree type
+    let filtered = schools;
+    if (filterType !== 'All') {
+      filtered = filtered.filter(school => school['Degree Type'] === filterType);
+    }
+
+    // Calculate classifications for filtered schools
+    const counts = {
+      reach: 0,
+      target: 0,
+      safety: 0,
+      unclassified: 0
+    };
+
+    filtered.forEach(school => {
+      const gpaClass = classifyGPA(applicantData.gpa, school['Average GPA']);
+      const mcatClass = classifyMCAT(applicantData.mcat, school['Average MCAT']);
+      const overallClassification = getOverallClassification(gpaClass, mcatClass);
+
+      if (overallClassification === 'Reach') {
+        counts.reach++;
+      } else if (overallClassification === 'Target') {
+        counts.target++;
+      } else if (overallClassification === 'Undershoot') {
+        counts.safety++;
+      } else {
+        counts.unclassified++;
+      }
+    });
+
+    return counts;
+  }, [schools, filterType, applicantData.gpa, applicantData.mcat]);
+
   // Filter and sort schools
   const filteredAndSortedSchools = useMemo(() => {
     let filtered = schools;
@@ -120,20 +165,42 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
             className={`chip ${filterType === 'All' ? 'active' : ''}`}
             onClick={() => setFilterType('All')}
           >
-            All
+            All ({degreeCounts.all})
           </button>
           <button
             className={`chip ${filterType === 'MD' ? 'active' : ''}`}
             onClick={() => setFilterType('MD')}
           >
-            MD
+            MD ({degreeCounts.md})
           </button>
           <button
             className={`chip ${filterType === 'DO' ? 'active' : ''}`}
             onClick={() => setFilterType('DO')}
           >
-            DO
+            DO ({degreeCounts.do})
           </button>
+        </div>
+
+        {/* Classification Summary */}
+        <div className="classification-summary">
+          <div className="summary-item reach">
+            <span className="summary-label">Reach</span>
+            <span className="summary-count">({classificationCounts.reach})</span>
+          </div>
+          <div className="summary-item target">
+            <span className="summary-label">Target</span>
+            <span className="summary-count">({classificationCounts.target})</span>
+          </div>
+          <div className="summary-item safety">
+            <span className="summary-label">Safety</span>
+            <span className="summary-count">({classificationCounts.safety})</span>
+          </div>
+          {classificationCounts.unclassified > 0 && (
+            <div className="summary-item unclassified">
+              <span className="summary-label">Unclassified</span>
+              <span className="summary-count">({classificationCounts.unclassified})</span>
+            </div>
+          )}
         </div>
 
         <div className="search-sort-row">

@@ -64,6 +64,50 @@
   border-color: var(--brand-teal-dark);
 }
 
+/* Classification Summary */
+.classification-summary {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.75rem;
+  background: var(--brand-muted-bg);
+  border-radius: 0.5rem;
+  border: 1px solid var(--brand-border);
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.summary-label {
+  color: var(--brand-text);
+}
+
+.summary-count {
+  color: var(--brand-text-secondary);
+  font-weight: 600;
+}
+
+.summary-item.reach .summary-label {
+  color: var(--brand-red);
+}
+
+.summary-item.target .summary-label {
+  color: var(--brand-teal-dark);
+}
+
+.summary-item.safety .summary-label {
+  color: #16a34a;
+}
+
+.summary-item.unclassified .summary-label {
+  color: var(--brand-text-secondary);
+}
+
 .search-sort-row {
   display: flex;
   gap: 0.75rem;
