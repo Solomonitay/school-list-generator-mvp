@@ -181,7 +181,6 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
               <th>In-State Advantage</th>
               <th>Classification</th>
               <th>Notes</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -225,23 +224,14 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                   <td className="text-cell tabular-nums">
                     {school['Out-of-State Matriculants %'] ? `${school['Out-of-State Matriculants %']}%` : 'N/A'}
                   </td>
-                  <td>
-                    {school['In-State Advantage'] && school['In-State Advantage'] !== 'unknown' ? (
-                      <span className={`badge advantage-badge ${school['In-State Advantage'].toLowerCase()}`}>
-                        {school['In-State Advantage']}
-                      </span>
-                    ) : (
-                      <span className="badge advantage-badge na">N/A</span>
-                    )}
+                  <td className="text-cell">
+                    {school['In-State Advantage'] && school['In-State Advantage'] !== 'unknown'
+                      ? school['In-State Advantage']
+                      : 'N/A'
+                    }
                   </td>
-                  <td>
-                    {overallClassification ? (
-                      <span className={`badge classification-badge ${overallClassification.toLowerCase()}`}>
-                        {overallClassification}
-                      </span>
-                    ) : (
-                      <span className="badge classification-badge na">N/A</span>
-                    )}
+                  <td className="text-cell">
+                    {overallClassification || 'N/A'}
                   </td>
                   <td className="notes-cell">
                     <input
@@ -250,15 +240,6 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                       className="notes-input"
                       defaultValue={school.notes || ''}
                     />
-                  </td>
-                  <td>
-                    <button
-                      className="remove-btn"
-                      onClick={() => onRemove(school['Medical School Name'])}
-                      title="Remove from list"
-                    >
-                      ×
-                    </button>
                   </td>
                 </tr>
               );
