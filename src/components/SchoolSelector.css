@@ -145,30 +145,3 @@
   font-weight: 400;
   line-height: 1.2;
 }
-
-.school-rates {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.rate-badge {
-  font-size: 0.625rem; /* text-xs */
-  font-weight: 500;
-  padding: 0.125rem 0.25rem;
-  border-radius: 0.25rem;
-  border: 1px solid;
-  white-space: nowrap;
-}
-
-.rate-badge.in-state {
-  background: #ecfdf5; /* green-50 */
-  color: #059669; /* green-600 */
-  border-color: #6ee7b7; /* green-300 */
-}
-
-.rate-badge.out-state {
-  background: #fef2f2; /* red-50 */
-  color: #dc2626; /* red-600 */
-  border-color: #fca5a5; /* red-300 */
-}

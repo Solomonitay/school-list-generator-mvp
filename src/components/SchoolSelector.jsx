@@ -95,21 +95,6 @@ function SchoolSelector({ schools, onAddToList, onSchoolSelect, applicantData })
                 >
                   <div className="school-name">{school['Medical School Name']}</div>
                   <div className="school-state">{school.State}</div>
-                  {/* Show matriculation rates if available */}
-                  {(school['In-State Matriculants %'] || school['Out-of-State Matriculants %']) && (
-                    <div className="school-rates">
-                      {school['In-State Matriculants %'] && (
-                        <span className="rate-badge in-state">
-                          In: {school['In-State Matriculants %']}%
-                        </span>
-                      )}
-                      {school['Out-of-State Matriculants %'] && (
-                        <span className="rate-badge out-state">
-                          Out: {school['Out-of-State Matriculants %']}%
-                        </span>
-                      )}
-                    </div>
-                  )}
                 </div>
               ))
             )}

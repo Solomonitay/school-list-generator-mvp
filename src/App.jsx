@@ -161,6 +161,36 @@ function App() {
                       <span className="detail-label">Institution:</span>
                       <span className="detail-value">{selectedSchoolData['Public School Status']}</span>
                     </div>
+
+                    {/* Matriculation Information */}
+                    {(selectedSchoolData['In-State Matriculants %'] || selectedSchoolData['Out-of-State Matriculants %']) && (
+                      <>
+                        <div className="detail-row">
+                          <span className="detail-label">Class Composition:</span>
+                          <div className="matriculation-info">
+                            {selectedSchoolData['In-State Matriculants %'] && (
+                              <span className="matriculation-badge in-state">
+                                {selectedSchoolData['In-State Matriculants %']}% In-State
+                              </span>
+                            )}
+                            {selectedSchoolData['Out-of-State Matriculants %'] && (
+                              <span className="matriculation-badge out-state">
+                                {selectedSchoolData['Out-of-State Matriculants %']}% Out-of-State
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        {selectedSchoolData['In-State Advantage'] && selectedSchoolData['In-State Advantage'] !== 'unknown' && (
+                          <div className="detail-row">
+                            <span className="detail-label">In-State Advantage:</span>
+                            <span className={`advantage-badge ${selectedSchoolData['In-State Advantage'].toLowerCase()}`}>
+                              {selectedSchoolData['In-State Advantage']}
+                            </span>
+                          </div>
+                        )}
+                      </>
+                    )}
+
                     <div className="preview-row full-width">
                       {selectedSchoolData['Website URL'] ? (
                         <a
