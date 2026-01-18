@@ -24,6 +24,8 @@ function App() {
       download: true,
       header: true,
       complete: (results) => {
+        console.log(`Loaded ${results.data.length} schools from CSV`);
+        console.log('Sample school:', results.data[0]);
         setSchools(results.data);
         setLoading(false);
       },

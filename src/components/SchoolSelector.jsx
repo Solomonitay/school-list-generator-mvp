@@ -11,11 +11,12 @@ function SchoolSelector({ schools, onAddToList, onSchoolSelect, applicantData })
   const filteredSchools = useMemo(() => {
     // Ensure schools is an array and handle edge cases
     if (!schools || !Array.isArray(schools)) {
+      console.warn('Schools data is not an array:', schools);
       return [];
     }
 
     try {
-      return schools.filter(school => {
+      const filtered = schools.filter(school => {
         // Ensure school object exists and has required properties
         if (!school || typeof school !== 'object') {
           return false;
@@ -30,6 +31,9 @@ function SchoolSelector({ schools, onAddToList, onSchoolSelect, applicantData })
 
         return matchesType && matchesSearch;
       });
+
+      console.log(`Filtered ${filtered.length} schools for type: ${selectedProgramType}, search: "${searchQuery}"`);
+      return filtered;
     } catch (error) {
       console.error('Error filtering schools:', error);
       return [];
