@@ -136,9 +136,9 @@ function SchoolSelector({ schools, onAddToList, onSchoolSelect, applicantData })
                       </div>
                       <div className="international-indicator">
                         {school['Accepts International Students'] ? (
-                          <span className="intl-badge accepted">🌍 Intl</span>
+                          <span className="intl-badge accepted">Intl</span>
                         ) : (
-                          <span className="intl-badge not-accepted">🏠 US Only</span>
+                          <span className="intl-badge not-accepted">US Only</span>
                         )}
                       </div>
                     </div>
