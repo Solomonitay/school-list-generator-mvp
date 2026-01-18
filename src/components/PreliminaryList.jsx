@@ -171,6 +171,7 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
             <tr>
               <th className="school-cell">School</th>
               <th>Degree</th>
+              <th>Casper</th>
               <th>State</th>
               <th>Avg GPA</th>
               <th>Avg MCAT</th>
@@ -204,6 +205,13 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                   </td>
                   <td>
                     <span className="badge degree-badge">{school['Degree Type']}</span>
+                  </td>
+                  <td>
+                    {school['Requires Casper'] === 'True' ? (
+                      <span className="badge casper-badge required">Required</span>
+                    ) : (
+                      <span className="badge casper-badge not-required">Not Required</span>
+                    )}
                   </td>
                   <td className="text-cell">{school.State}</td>
                   <td className="text-cell tabular-nums">{school['Average GPA']}</td>
