@@ -206,10 +206,10 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                   <td>
                     <span className="badge degree-badge">{school['Degree Type']}</span>
                   </td>
-                  <td>{school.State}</td>
+                  <td className="text-cell">{school.State}</td>
                   <td className="numeric tabular-nums">{school['Average GPA']}</td>
                   <td className="numeric tabular-nums">{school['Average MCAT']}</td>
-                  <td>{school['Minimum MCAT Notes']}</td>
+                  <td className="text-cell">{school['Minimum MCAT Notes']}</td>
                   {applicantData.state && (
                     <td>
                       {residencyStatus && (
@@ -220,10 +220,10 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                     </td>
                   )}
                   <td className="numeric tabular-nums">
-                    {school['In-State Acceptance Rate %'] ? `${school['In-State Acceptance Rate %']}%` : 'N/A'}
+                    {school['In-State Matriculants %'] ? `${school['In-State Matriculants %']}%` : 'N/A'}
                   </td>
                   <td className="numeric tabular-nums">
-                    {school['Out-of-State Acceptance Rate %'] ? `${school['Out-of-State Acceptance Rate %']}%` : 'N/A'}
+                    {school['Out-of-State Matriculants %'] ? `${school['Out-of-State Matriculants %']}%` : 'N/A'}
                   </td>
                   <td>
                     {school['In-State Advantage'] && school['In-State Advantage'] !== 'unknown' ? (
@@ -243,7 +243,7 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                       <span className="badge classification-badge na">N/A</span>
                     )}
                   </td>
-                  <td>
+                  <td className="notes-cell">
                     <input
                       type="text"
                       placeholder="Add note..."
