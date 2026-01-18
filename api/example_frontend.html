@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical School Finder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .filters {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #495057;
+            font-size: 0.9em;
+        }
+
+        select, input {
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .stats {
+            padding: 20px 30px;
+            background: #e3f2fd;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-card {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .results {
+            padding: 30px;
+        }
+
+        .school-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .school-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .school-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .school-name {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #212529;
+            flex: 1;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge-state {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-degree {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .badge-public {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .badge-private {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .badge-amcas {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .badge-aacomas {
+            background: #f3e5f5;
+            color: #6a1b9a;
+        }
+
+        .badge-tmdsas {
+            background: #fff8e1;
+            color: #f57f17;
+        }
+
+        .badge-mdphd {
+            background: #e0f2f1;
+            color: #00695c;
+            font-weight: bold;
+        }
+
+        .website-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .website-link:hover {
+            background: #5568d3;
+        }
+
+        .website-link::after {
+            content: "↗";
+            font-size: 1.1em;
+        }
+
+        .school-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-item-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+
+        .stat-item-value {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Medical School Finder</h1>
+            <p class="subtitle">Find and compare U.S. medical schools by admission statistics</p>
+        </header>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="stateFilter">State</label>
+                <select id="stateFilter">
+                    <option value="">All States</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="degreeFilter">Degree Type</label>
+                <select id="degreeFilter">
+                    <option value="">All Degrees</option>
+                    <option value="MD">MD</option>
+                    <option value="DO">DO</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="publicFilter">School Type</label>
+                <select id="publicFilter">
+                    <option value="">All Schools</option>
+                    <option value="true">Public Only</option>
+                    <option value="false">Private Only</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="appSystemFilter">Application System</label>
+                <select id="appSystemFilter">
+                    <option value="">All Systems</option>
+                    <option value="AMCAS">AMCAS</option>
+                    <option value="AACOMAS">AACOMAS</option>
+                    <option value="TMDSAS">TMDSAS</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="mdphdFilter">MD/PhD Programs</label>
+                <select id="mdphdFilter">
+                    <option value="">All Schools</option>
+                    <option value="true">Has MD/PhD Only</option>
+                    <option value="false">No MD/PhD Only</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="minGPA">Min GPA</label>
+                <input type="number" id="minGPA" step="0.1" min="0" max="4" placeholder="e.g., 3.5">
+            </div>
+
+            <div class="filter-group">
+                <label for="minMCAT">Min MCAT</label>
+                <input type="number" id="minMCAT" step="1" min="472" max="528" placeholder="e.g., 510">
+            </div>
+        </div>
+
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="totalSchools">-</div>
+                <div class="stat-label">Total Schools</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="mdSchools">-</div>
+                <div class="stat-label">MD Programs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="doSchools">-</div>
+                <div class="stat-label">DO Programs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgGPA">-</div>
+                <div class="stat-label">Avg GPA Range</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgMCAT">-</div>
+                <div class="stat-label">Avg MCAT Range</div>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="loading">Loading schools data...</div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5000/api';
+        let allSchools = [];
+        let allStates = [];
+
+        // Initialize the app
+        async function init() {
+            try {
+                // Load stats
+                await loadStats();
+
+                // Load states for dropdown
+                await loadStates();
+
+                // Load all schools
+                await loadSchools();
+
+                // Set up event listeners
+                setupFilters();
+            } catch (error) {
+                showError('Failed to load data. Make sure the API server is running on http://localhost:5000');
+                console.error(error);
+            }
+        }
+
+        async function loadStats() {
+            const response = await fetch(`${API_BASE_URL}/stats`);
+            const stats = await response.json();
+
+            document.getElementById('totalSchools').textContent = stats.total_schools;
+            document.getElementById('mdSchools').textContent = stats.by_degree.md;
+            document.getElementById('doSchools').textContent = stats.by_degree.do;
+            document.getElementById('avgGPA').textContent = `${stats.gpa_stats.min} - ${stats.gpa_stats.max}`;
+            document.getElementById('avgMCAT').textContent = `${stats.mcat_stats.min} - ${stats.mcat_stats.max}`;
+        }
+
+        async function loadStates() {
+            const response = await fetch(`${API_BASE_URL}/states`);
+            const result = await response.json();
+            allStates = result.data;
+
+            const stateFilter = document.getElementById('stateFilter');
+            allStates.forEach(state => {
+                const option = document.createElement('option');
+                option.value = state.state;
+                option.textContent = `${state.state} (${state.count})`;
+                stateFilter.appendChild(option);
+            });
+        }
+
+        async function loadSchools(filters = {}) {
+            const params = new URLSearchParams(filters);
+            const response = await fetch(`${API_BASE_URL}/schools?${params}`);
+            const result = await response.json();
+            allSchools = result.data;
+
+            displaySchools(allSchools);
+        }
+
+        function displaySchools(schools) {
+            const resultsDiv = document.getElementById('results');
+
+            if (schools.length === 0) {
+                resultsDiv.innerHTML = '<div class="no-results">No schools found matching your criteria.</div>';
+                return;
+            }
+
+            resultsDiv.innerHTML = schools.map(school => `
+                <div class="school-card">
+                    <div class="school-header">
+                        <div class="school-name">${school.name}</div>
+                        <div class="badges">
+                            <span class="badge badge-state">${school.state}</span>
+                            <span class="badge badge-degree">${school.degreeType}</span>
+                            <span class="badge ${school.isPublic ? 'badge-public' : 'badge-private'}">
+                                ${school.isPublic ? 'Public' : 'Private'}
+                            </span>
+                            <span class="badge badge-${school.applicationSystem.toLowerCase()}">
+                                ${school.applicationSystem}
+                            </span>
+                            ${school.hasMDPhD ? '<span class="badge badge-mdphd">MD/PhD</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="school-stats">
+                        <div class="stat-item">
+                            <div class="stat-item-label">Average GPA</div>
+                            <div class="stat-item-value">${school.avgGPA}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-item-label">Average MCAT</div>
+                            <div class="stat-item-value">${school.avgMCAT}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-item-label">Min MCAT Notes</div>
+                            <div class="stat-item-value">${school.minMCATNotes || 'NR'}</div>
+                        </div>
+                    </div>
+                    ${school.websiteURL ? `<a href="${school.websiteURL}" target="_blank" rel="noopener noreferrer" class="website-link">Visit School Website</a>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function setupFilters() {
+            const filters = ['stateFilter', 'degreeFilter', 'publicFilter', 'appSystemFilter', 'mdphdFilter', 'minGPA', 'minMCAT'];
+
+            filters.forEach(filterId => {
+                document.getElementById(filterId).addEventListener('change', applyFilters);
+                document.getElementById(filterId).addEventListener('input', applyFilters);
+            });
+        }
+
+        async function applyFilters() {
+            const filters = {};
+
+            const state = document.getElementById('stateFilter').value;
+            if (state) filters.state = state;
+
+            const degree = document.getElementById('degreeFilter').value;
+            if (degree) filters.degree = degree;
+
+            const publicFilter = document.getElementById('publicFilter').value;
+            if (publicFilter) filters.public = publicFilter;
+
+            const appSystem = document.getElementById('appSystemFilter').value;
+            if (appSystem) filters.app_system = appSystem;
+
+            const mdphdFilter = document.getElementById('mdphdFilter').value;
+            if (mdphdFilter) filters.mdphd = mdphdFilter;
+
+            const minGPA = document.getElementById('minGPA').value;
+            if (minGPA) filters.min_gpa = minGPA;
+
+            const minMCAT = document.getElementById('minMCAT').value;
+            if (minMCAT) filters.min_mcat = minMCAT;
+
+            await loadSchools(filters);
+        }
+
+        function showError(message) {
+            document.getElementById('results').innerHTML = `<div class="error">${message}</div>`;
+        }
+
+        // Start the app when page loads
+        init();
+    </script>
+</body>
+</html>
