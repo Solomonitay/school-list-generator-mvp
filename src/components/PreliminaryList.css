@@ -181,6 +181,48 @@
   color: var(--text-muted);
 }
 
+.advantage-badge {
+  padding: 0.25rem 0.625rem; /* px-2.5 py-1 */
+  border-radius: 0.375rem; /* rounded-md */
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 500;
+  text-transform: capitalize;
+  border: 1px solid var(--border-color);
+  display: inline-block;
+  min-width: 70px;
+  text-align: center;
+}
+
+.advantage-badge.huge {
+  background: #fef2f2; /* red-50 */
+  color: #dc2626; /* red-600 */
+  border-color: #fca5a5; /* red-300 */
+}
+
+.advantage-badge.material {
+  background: #fef3c7; /* yellow-50 */
+  color: #d97706; /* yellow-600 */
+  border-color: #fcd34d; /* yellow-300 */
+}
+
+.advantage-badge.modest {
+  background: #ecfdf5; /* green-50 */
+  color: #059669; /* green-600 */
+  border-color: #6ee7b7; /* green-300 */
+}
+
+.advantage-badge.negligible,
+.advantage-badge.none {
+  background: var(--muted-bg);
+  color: var(--text-muted);
+  border-color: var(--border-color);
+}
+
+.advantage-badge.na {
+  background: var(--muted-bg);
+  color: var(--text-muted);
+}
+
 .comparison-cell {
   padding: 0.3rem 0.6rem;
   border-radius: 6px;

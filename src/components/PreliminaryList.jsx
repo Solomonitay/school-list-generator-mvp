@@ -176,6 +176,9 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
               <th>Avg MCAT</th>
               <th>Min MCAT</th>
               {applicantData.state && <th>Residency</th>}
+              <th>In-State %</th>
+              <th>Out-State %</th>
+              <th>In-State Advantage</th>
               <th>Classification</th>
               <th>Notes</th>
               <th>Actions</th>
@@ -216,6 +219,21 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                       )}
                     </td>
                   )}
+                  <td className="numeric tabular-nums">
+                    {school['In-State Acceptance Rate %'] ? `${school['In-State Acceptance Rate %']}%` : 'N/A'}
+                  </td>
+                  <td className="numeric tabular-nums">
+                    {school['Out-of-State Acceptance Rate %'] ? `${school['Out-of-State Acceptance Rate %']}%` : 'N/A'}
+                  </td>
+                  <td>
+                    {school['In-State Advantage'] && school['In-State Advantage'] !== 'unknown' ? (
+                      <span className={`badge advantage-badge ${school['In-State Advantage'].toLowerCase()}`}>
+                        {school['In-State Advantage']}
+                      </span>
+                    ) : (
+                      <span className="badge advantage-badge na">N/A</span>
+                    )}
+                  </td>
                   <td>
                     {overallClassification ? (
                       <span className={`badge classification-badge ${overallClassification.toLowerCase()}`}>
