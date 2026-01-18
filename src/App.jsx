@@ -79,7 +79,20 @@ function App() {
 
   const addToPreliminaryList = (school) => {
     if (!preliminaryList.find(s => s['Medical School Name'] === school['Medical School Name'])) {
-      setPreliminaryList([...preliminaryList, school]);
+      // Calculate classifications for the school
+      const gpaClass = classifyGPA(applicantData.gpa, school['Average GPA']);
+      const mcatClass = classifyMCAT(applicantData.mcat, school['Average MCAT']);
+      const overallClassification = getOverallClassification(gpaClass, mcatClass);
+
+      // Add classification data to the school object
+      const schoolWithClassification = {
+        ...school,
+        gpaClass,
+        mcatClass,
+        overallClassification
+      };
+
+      setPreliminaryList([...preliminaryList, schoolWithClassification]);
     }
   };
 
@@ -92,29 +105,306 @@ function App() {
   };
 
   const exportToCSV = () => {
-    const headers = [
-      'Medical School Name', 'Degree Type', 'State', 'Application System',
-      'Average GPA', 'Average MCAT', 'Minimum MCAT Notes', 'Public School Status',
-      'Website URL', 'Notes'
-    ];
-    const data = preliminaryList.map(school => ({
-      'Medical School Name': school['Medical School Name'],
-      'Degree Type': school['Degree Type'],
-      'State': school.State,
-      'Application System': school['Application System'],
-      'Average GPA': school['Average GPA'],
-      'Average MCAT': school['Average MCAT'],
-      'Minimum MCAT Notes': school['Minimum MCAT Notes'],
-      'Public School Status': school['Public School Status'],
-      'Website URL': school['Website URL'],
-      'Notes': school.notes || ''
-    }));
+    // Group schools by classification (Reach, Target, Safety)
+    const groupedSchools = {
+      reach: [],
+      target: [],
+      safety: []
+    };
 
-    const csv = Papa.unparse(data, { header: true });
+    preliminaryList.forEach(school => {
+      // Determine classification based on GPA and MCAT (using existing logic)
+      const gpaClass = school.gpaClass || 'Unknown';
+      const mcatClass = school.mcatClass || 'Unknown';
+      const overallClassification = school.overallClassification || 'Unknown';
+
+      if (overallClassification === 'Reach') {
+        groupedSchools.reach.push(school);
+      } else if (overallClassification === 'Target') {
+        groupedSchools.target.push(school);
+      } else {
+        // Default to safety for undershoot or unknown
+        groupedSchools.safety.push(school);
+      }
+    });
+
+    // Create structured CSV data similar to the Excel template
+    const csvData = [];
+
+    // Add Reach Schools section
+    if (groupedSchools.reach.length > 0) {
+      // Section header
+      csvData.push({
+        'Reach Schools': 'Reach Schools',
+        'School Name': '',
+        'Average MCAT': '',
+        'Average GPA': '',
+        'Casper required?': '',
+        'AAMC PREview required?': '',
+        'Additional Requirements (Duet, Snapshot, etc).': '',
+        'Notes': ''
+      });
+
+      // Header row
+      csvData.push({
+        'Reach Schools': '(by order of preference)',
+        'School Name': 'School Name',
+        'Average MCAT': 'Average MCAT',
+        'Average GPA': 'Average GPA',
+        'Casper required?': 'Casper required?',
+        'AAMC PREview required?': 'AAMC PREview required?',
+        'Additional Requirements (Duet, Snapshot, etc).': 'Additional Requirements (Duet, Snapshot, etc).',
+        'Notes': 'Notes'
+      });
+
+      // Add reach schools with ranking
+      groupedSchools.reach.forEach((school, index) => {
+        csvData.push({
+          'Reach Schools': (index + 1).toString(),
+          'School Name': school['Medical School Name'] || '',
+          'Average MCAT': school['Average MCAT'] || '',
+          'Average GPA': school['Average GPA'] || '',
+          'Casper required?': school['Requires Casper'] === 'True' ? 'Yes' : 'No',
+          'AAMC PREview required?': school['Requires PREview'] !== 'Not Required' ? school['Requires PREview'] : 'No',
+          'Additional Requirements (Duet, Snapshot, etc).': '', // Could be populated based on school data
+          'Notes': school.notes || ''
+        });
+      });
+
+      // Add empty rows to match template (up to 12 slots)
+      for (let i = groupedSchools.reach.length; i < 12; i++) {
+        csvData.push({
+          'Reach Schools': (i + 1).toString(),
+          'School Name': '',
+          'Average MCAT': '',
+          'Average GPA': '',
+          'Casper required?': '',
+          'AAMC PREview required?': '',
+          'Additional Requirements (Duet, Snapshot, etc).': '',
+          'Notes': ''
+        });
+      }
+    }
+
+    // Add Target Schools section
+    if (groupedSchools.target.length > 0) {
+      // Section header
+      csvData.push({
+        'Reach Schools': 'Target Schools',
+        'School Name': '',
+        'Average MCAT': '',
+        'Average GPA': '',
+        'Casper required?': '',
+        'AAMC PREview required?': '',
+        'Additional Requirements (Duet, Snapshot, etc).': '',
+        'Notes': ''
+      });
+
+      // Header row
+      csvData.push({
+        'Reach Schools': '(by order of preference)',
+        'School Name': 'School Name',
+        'Average MCAT': 'Average MCAT',
+        'Average GPA': 'Average GPA',
+        'Casper required?': 'Casper required?',
+        'AAMC PREview required?': 'AAMC PREview required?',
+        'Additional Requirements (Duet, Snapshot, etc).': 'Additional Requirements (Duet, Snapshot, etc).',
+        'Notes': 'Notes'
+      });
+
+      // Add target schools with ranking
+      groupedSchools.target.forEach((school, index) => {
+        csvData.push({
+          'Reach Schools': (index + 1).toString(),
+          'School Name': school['Medical School Name'] || '',
+          'Average MCAT': school['Average MCAT'] || '',
+          'Average GPA': school['Average GPA'] || '',
+          'Casper required?': school['Requires Casper'] === 'True' ? 'Yes' : 'No',
+          'AAMC PREview required?': school['Requires PREview'] !== 'Not Required' ? school['Requires PREview'] : 'No',
+          'Additional Requirements (Duet, Snapshot, etc).': '',
+          'Notes': school.notes || ''
+        });
+      });
+
+      // Add empty rows to match template (up to 12 slots)
+      for (let i = groupedSchools.target.length; i < 12; i++) {
+        csvData.push({
+          'Reach Schools': (i + 1).toString(),
+          'School Name': '',
+          'Average MCAT': '',
+          'Average GPA': '',
+          'Casper required?': '',
+          'AAMC PREview required?': '',
+          'Additional Requirements (Duet, Snapshot, etc).': '',
+          'Notes': ''
+        });
+      }
+    }
+
+    // Add Safety Schools section
+    if (groupedSchools.safety.length > 0) {
+      // Section header
+      csvData.push({
+        'Reach Schools': 'Safety Schools',
+        'School Name': '',
+        'Average MCAT': '',
+        'Average GPA': '',
+        'Casper required?': '',
+        'AAMC PREview required?': '',
+        'Additional Requirements (Duet, Snapshot, etc).': '',
+        'Notes': ''
+      });
+
+      // Header row
+      csvData.push({
+        'Reach Schools': '(by order of preference)',
+        'School Name': 'School Name',
+        'Average MCAT': 'Average MCAT',
+        'Average GPA': 'Average GPA',
+        'Casper required?': 'Casper required?',
+        'AAMC PREview required?': 'AAMC PREview required?',
+        'Additional Requirements (Duet, Snapshot, etc).': 'Additional Requirements (Duet, Snapshot, etc).',
+        'Notes': 'Notes'
+      });
+
+      // Add safety schools with ranking
+      groupedSchools.safety.forEach((school, index) => {
+        csvData.push({
+          'Reach Schools': (index + 1).toString(),
+          'School Name': school['Medical School Name'] || '',
+          'Average MCAT': school['Average MCAT'] || '',
+          'Average GPA': school['Average GPA'] || '',
+          'Casper required?': school['Requires Casper'] === 'True' ? 'Yes' : 'No',
+          'AAMC PREview required?': school['Requires PREview'] !== 'Not Required' ? school['Requires PREview'] : 'No',
+          'Additional Requirements (Duet, Snapshot, etc).': '',
+          'Notes': school.notes || ''
+        });
+      });
+
+      // Add empty rows to match template (up to 13 slots)
+      for (let i = groupedSchools.safety.length; i < 13; i++) {
+        csvData.push({
+          'Reach Schools': (i + 1).toString(),
+          'School Name': '',
+          'Average MCAT': '',
+          'Average GPA': '',
+          'Casper required?': '',
+          'AAMC PREview required?': '',
+          'Additional Requirements (Duet, Snapshot, etc).': '',
+          'Notes': ''
+        });
+      }
+    }
+
+    // Add summary section (empty rows followed by totals)
+    csvData.push(
+      {
+        'Reach Schools': '',
+        'School Name': '',
+        'Average MCAT': '',
+        'Average GPA': '',
+        'Casper required?': '',
+        'AAMC PREview required?': '',
+        'Additional Requirements (Duet, Snapshot, etc).': '',
+        'Notes': ''
+      },
+      {
+        'Reach Schools': '',
+        'School Name': '',
+        'Average MCAT': '',
+        'Average GPA': '',
+        'Casper required?': '',
+        'AAMC PREview required?': '',
+        'Additional Requirements (Duet, Snapshot, etc).': '',
+        'Notes': ''
+      },
+      {
+        'Reach Schools': '',
+        'School Name': '',
+        'Average MCAT': '',
+        'Average GPA': '',
+        'Casper required?': '',
+        'AAMC PREview required?': '',
+        'Additional Requirements (Duet, Snapshot, etc).': '',
+        'Notes': ''
+      },
+      {
+        'Reach Schools': '',
+        'School Name': '',
+        'Average MCAT': '',
+        'Average GPA': '',
+        'Casper required?': '',
+        'AAMC PREview required?': '',
+        'Additional Requirements (Duet, Snapshot, etc).': '',
+        'Notes': ''
+      },
+      {
+        'Reach Schools': 'TOTAL:',
+        'School Name': '',
+        'Average MCAT': '',
+        'Average GPA': '',
+        'Casper required?': '',
+        'AAMC PREview required?': '',
+        'Additional Requirements (Duet, Snapshot, etc).': '',
+        'Notes': ''
+      },
+      {
+        'Reach Schools': 'SUBMITTED:',
+        'School Name': '',
+        'Average MCAT': '',
+        'Average GPA': '',
+        'Casper required?': '',
+        'AAMC PREview required?': '',
+        'Additional Requirements (Duet, Snapshot, etc).': '',
+        'Notes': ''
+      },
+      {
+        'Reach Schools': 'INTERVIEWS:',
+        'School Name': '',
+        'Average MCAT': '',
+        'Average GPA': '',
+        'Casper required?': '',
+        'AAMC PREview required?': '',
+        'Additional Requirements (Duet, Snapshot, etc).': '',
+        'Notes': ''
+      },
+      {
+        'Reach Schools': 'WAITLIST:',
+        'School Name': '',
+        'Average MCAT': '',
+        'Average GPA': '',
+        'Casper required?': '',
+        'AAMC PREview required?': '',
+        'Additional Requirements (Duet, Snapshot, etc).': '',
+        'Notes': ''
+      },
+      {
+        'Reach Schools': 'REJECTED:',
+        'School Name': '',
+        'Average MCAT': '',
+        'Average GPA': '',
+        'Casper required?': '',
+        'AAMC PREview required?': '',
+        'Additional Requirements (Duet, Snapshot, etc).': '',
+        'Notes': ''
+      },
+      {
+        'Reach Schools': 'ACCEPTED:',
+        'School Name': '',
+        'Average MCAT': '',
+        'Average GPA': '',
+        'Casper required?': '',
+        'AAMC PREview required?': '',
+        'Additional Requirements (Duet, Snapshot, etc).': '',
+        'Notes': ''
+      }
+    );
+
+    const csv = Papa.unparse(csvData);
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.setAttribute('download', 'school_list.csv');
+    link.setAttribute('download', 'school_list_export.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
