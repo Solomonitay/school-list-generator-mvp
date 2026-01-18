@@ -22,12 +22,12 @@
 }
 
 .profile-field label {
-  font-size: 0.75rem; /* text-xs */
-  font-weight: 500; /* font-medium */
-  color: var(--brand-text-secondary);
-  margin-bottom: 0.25rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em; /* tracking-wide */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 600; /* font-semibold */
+  color: var(--brand-text);
+  margin-bottom: 0.5rem;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 .profile-field input {
