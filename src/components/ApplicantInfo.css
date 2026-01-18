@@ -32,7 +32,8 @@
 
 .profile-field input,
 .profile-field select {
-  padding: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
   border: 1px solid var(--brand-border);
   border-radius: 0.375rem; /* rounded-md */
   background: var(--brand-white);
