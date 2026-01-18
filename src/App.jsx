@@ -198,7 +198,7 @@ function App() {
                   {/* Action Buttons */}
                   <div className="action-buttons">
                     <button
-                      className="btn btn-secondary"
+                      className="btn btn-success"
                       onClick={() => {
                         if (selectedSchoolData['Website URL']) {
                           window.open(selectedSchoolData['Website URL'], '_blank', 'noopener,noreferrer');

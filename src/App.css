@@ -88,6 +88,18 @@
   border-color: var(--brand-border);
 }
 
+.btn-success {
+  background: #16a34a; /* green-600 */
+  color: var(--brand-white);
+  border-color: #16a34a;
+}
+
+.btn-success:hover:not(:disabled) {
+  background: #15803d; /* green-700 */
+  border-color: #15803d;
+  transform: translateY(-1px);
+}
+
 .main-content-container {
   max-width: 1536px; /* screen-2xl */
   margin: 0 auto;
