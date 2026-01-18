@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ApplicantInfo.css';
 
 function ApplicantInfo({ applicantData, onApplicantDataChange }) {
+  const [stateSearchQuery, setStateSearchQuery] = useState('');
+  const [showStateDropdown, setShowStateDropdown] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     onApplicantDataChange({
@@ -19,6 +22,36 @@ function ApplicantInfo({ applicantData, onApplicantDataChange }) {
     'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
     'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
   ];
+
+  const filteredStates = usStates.filter(state =>
+    state.toLowerCase().includes(stateSearchQuery.toLowerCase())
+  );
+
+  const handleStateSearchChange = (e) => {
+    setStateSearchQuery(e.target.value);
+    setShowStateDropdown(true);
+  };
+
+  const handleStateSelect = (state) => {
+    onApplicantDataChange({
+      ...applicantData,
+      state: state
+    });
+    setStateSearchQuery('');
+    setShowStateDropdown(false);
+  };
+
+  const handleStateSearchFocus = () => {
+    setShowStateDropdown(true);
+  };
+
+  const handleStateSearchBlur = () => {
+    // Delay to allow click on dropdown item
+    setTimeout(() => {
+      setShowStateDropdown(false);
+      setStateSearchQuery('');
+    }, 200);
+  };
 
   return (
     <div className="applicant-info">
@@ -66,17 +99,37 @@ function ApplicantInfo({ applicantData, onApplicantDataChange }) {
         </div>
         <div className="profile-field">
           <label htmlFor="state">State of Residency</label>
-          <select
-            id="state"
-            name="state"
-            value={applicantData.state}
-            onChange={handleInputChange}
-          >
-            <option value="">Select State</option>
-            {usStates.map(state => (
-              <option key={state} value={state}>{state}</option>
-            ))}
-          </select>
+          <div className="state-dropdown-container">
+            <input
+              type="text"
+              id="state"
+              placeholder={applicantData.state || "Search state..."}
+              value={stateSearchQuery}
+              onChange={handleStateSearchChange}
+              onFocus={handleStateSearchFocus}
+              onBlur={handleStateSearchBlur}
+              className="state-search-input"
+            />
+            {showStateDropdown && (
+              <div className="state-dropdown-menu">
+                {filteredStates.length === 0 ? (
+                  <div className="state-dropdown-item no-results">
+                    No states found
+                  </div>
+                ) : (
+                  filteredStates.map((state) => (
+                    <div
+                      key={state}
+                      className="state-dropdown-item"
+                      onClick={() => handleStateSelect(state)}
+                    >
+                      {state}
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
