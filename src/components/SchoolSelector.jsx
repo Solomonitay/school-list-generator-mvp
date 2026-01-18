@@ -9,13 +9,31 @@ function SchoolSelector({ schools, onAddToList, onSchoolSelect, applicantData })
 
   // Filter schools by degree type and search
   const filteredSchools = useMemo(() => {
-    return schools.filter(school => {
-      const matchesType = school['Degree Type'] === selectedProgramType;
-      const matchesSearch = searchQuery === '' ||
-        school['Medical School Name'].toLowerCase().includes(searchQuery.toLowerCase()) ||
-        school.State.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesType && matchesSearch;
-    });
+    // Ensure schools is an array and handle edge cases
+    if (!schools || !Array.isArray(schools)) {
+      return [];
+    }
+
+    try {
+      return schools.filter(school => {
+        // Ensure school object exists and has required properties
+        if (!school || typeof school !== 'object') {
+          return false;
+        }
+
+        const matchesType = school['Degree Type'] === selectedProgramType;
+
+        // Handle search query safely
+        const matchesSearch = searchQuery === '' ||
+          (school['Medical School Name'] && school['Medical School Name'].toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (school.State && school.State.toLowerCase().includes(searchQuery.toLowerCase()));
+
+        return matchesType && matchesSearch;
+      });
+    } catch (error) {
+      console.error('Error filtering schools:', error);
+      return [];
+    }
   }, [schools, selectedProgramType, searchQuery]);
 
   const handleProgramTypeChange = (programType) => {
@@ -26,10 +44,16 @@ function SchoolSelector({ schools, onAddToList, onSchoolSelect, applicantData })
   };
 
   const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearchQuery(value);
-    // Always show dropdown when typing
-    setShowDropdown(true);
+    try {
+      const value = e.target.value || '';
+      setSearchQuery(value);
+      // Always show dropdown when typing
+      setShowDropdown(true);
+    } catch (error) {
+      console.error('Error handling search change:', error);
+      setSearchQuery('');
+      setShowDropdown(false);
+    }
   };
 
   const handleSearchFocus = () => {
@@ -87,16 +111,27 @@ function SchoolSelector({ schools, onAddToList, onSchoolSelect, applicantData })
                 No schools found
               </div>
             ) : (
-              filteredSchools.map((school) => (
-                <div
-                  key={school['Medical School Name']}
-                  className="dropdown-item"
-                  onClick={() => handleSchoolSelect(school)}
-                >
-                  <div className="school-name">{school['Medical School Name']}</div>
-                  <div className="school-state">{school.State}</div>
-                </div>
-              ))
+              filteredSchools.slice(0, 50).map((school) => {
+                // Safety check for school data
+                if (!school || !school['Medical School Name']) {
+                  return null;
+                }
+
+                return (
+                  <div
+                    key={school['Medical School Name']}
+                    className="dropdown-item"
+                    onClick={() => handleSchoolSelect(school)}
+                  >
+                    <div className="school-name">
+                      {school['Medical School Name'] || 'Unknown School'}
+                    </div>
+                    <div className="school-state">
+                      {school.State || 'Unknown State'}
+                    </div>
+                  </div>
+                );
+              }).filter(Boolean) // Remove any null items
             )}
           </div>
         )}
