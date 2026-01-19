@@ -519,13 +519,6 @@ function App() {
                       </div>
                     </div>
 
-                    <div className="detail-row">
-                      <span className="detail-label">International Students:</span>
-                      <span className="detail-value">
-                        {selectedSchoolData['Accepts International Students'] ? 'Accepted' : 'Not Accepted'}
-                      </span>
-                    </div>
-
                     {/* Matriculation Information - Always shown */}
                     <div className="detail-row">
                       <span className="detail-label">In-State %:</span>
