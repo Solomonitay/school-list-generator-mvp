@@ -286,7 +286,7 @@ function App() {
                   <h4 className="school-name">{selectedSchoolData['Medical School Name']}</h4>
                   <div className="preview-details">
                     <div className="detail-row">
-                      <span className="detail-label">State of Residency:</span>
+                      <span className="detail-label">State:</span>
                       <span className="detail-value">{selectedSchoolData.State}</span>
                     </div>
                     <div className="detail-row">
