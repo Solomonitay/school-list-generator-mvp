@@ -53,7 +53,7 @@ function App() {
 
   // Load CSV data
   useEffect(() => {
-    Papa.parse('/medical_schools_data.csv', {
+    Papa.parse(`${import.meta.env.BASE_URL}medical_schools_data.csv`, {
       download: true,
       header: true,
       complete: (results) => {
