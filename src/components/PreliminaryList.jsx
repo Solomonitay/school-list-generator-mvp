@@ -315,7 +315,7 @@ function PreliminaryList({ schools, onRemove, onUpdateNotes, onReorder, applican
               {applicantData.state && <th>Residency</th>}
               <th>In-State %</th>
               <th>OOS %</th>
-              <th>Advantage</th>
+              <th>In-State Adv.</th>
               <th>Casper</th>
               <th>PREview</th>
               <th>Classification</th>
