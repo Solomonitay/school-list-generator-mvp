@@ -319,7 +319,7 @@ function App() {
                       if (overallClassification) {
                         return (
                           <div className="detail-row">
-                            <span className="detail-label">Your Classification:</span>
+                            <span className="detail-label">Classification:</span>
                             <span className={`badge classification-badge ${overallClassification.toLowerCase()}`}>
                               {overallClassification}
                             </span>
@@ -328,7 +328,7 @@ function App() {
                       } else if (applicantData.gpa && applicantData.mcat) {
                         return (
                           <div className="detail-row">
-                            <span className="detail-label">Your Classification:</span>
+                            <span className="detail-label">Classification:</span>
                             <span className="badge classification-badge na">Unable to classify</span>
                           </div>
                         );
@@ -341,10 +341,10 @@ function App() {
                       }
                     })()}
 
-                    {/* Matriculation Information - Always shown */}
+                    {/* Matriculation Information */}
                     <div className="detail-row">
                       <span className="detail-label">In-State %:</span>
-                      <span className="detail-value">
+                      <span className="detail-value tabular-nums">
                         {selectedSchoolData['In-State Matriculants %']
                           ? `${selectedSchoolData['In-State Matriculants %']}%`
                           : 'N/A'
@@ -353,12 +353,39 @@ function App() {
                     </div>
                     <div className="detail-row">
                       <span className="detail-label">Out-of-State %:</span>
-                      <span className="detail-value">
+                      <span className="detail-value tabular-nums">
                         {selectedSchoolData['Out-of-State Matriculants %']
                           ? `${selectedSchoolData['Out-of-State Matriculants %']}%`
                           : 'N/A'
                         }
                       </span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="detail-label">In-State Advantage:</span>
+                      {(() => {
+                        const inState = parseFloat(selectedSchoolData['In-State Matriculants %']);
+                        if (isNaN(inState)) return <span className="detail-value">N/A</span>;
+                        
+                        let advantage, className;
+                        if (inState >= 80) {
+                          advantage = 'Huge';
+                          className = 'huge';
+                        } else if (inState >= 60) {
+                          advantage = 'Material';
+                          className = 'material';
+                        } else if (inState >= 40) {
+                          advantage = 'Modest';
+                          className = 'modest';
+                        } else {
+                          advantage = 'None';
+                          className = 'none';
+                        }
+                        return (
+                          <span className={`badge advantage-badge ${className}`}>
+                            {advantage}
+                          </span>
+                        );
+                      })()}
                     </div>
                   </div>
 

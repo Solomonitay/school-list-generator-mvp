@@ -315,6 +315,7 @@ function PreliminaryList({ schools, onRemove, onUpdateNotes, onReorder, applican
               {applicantData.state && <th>Residency</th>}
               <th>In-State %</th>
               <th>OOS %</th>
+              <th>Advantage</th>
               <th>Casper</th>
               <th>PREview</th>
               <th>Classification</th>
@@ -377,6 +378,32 @@ function PreliminaryList({ schools, onRemove, onUpdateNotes, onReorder, applican
                   </td>
                   <td className="text-cell tabular-nums">
                     {school['Out-of-State Matriculants %'] ? `${school['Out-of-State Matriculants %']}%` : 'N/A'}
+                  </td>
+                  <td>
+                    {(() => {
+                      const inState = parseFloat(school['In-State Matriculants %']);
+                      if (isNaN(inState)) return <span className="na-text">N/A</span>;
+                      
+                      let advantage, className;
+                      if (inState >= 80) {
+                        advantage = 'Huge';
+                        className = 'huge';
+                      } else if (inState >= 60) {
+                        advantage = 'Material';
+                        className = 'material';
+                      } else if (inState >= 40) {
+                        advantage = 'Modest';
+                        className = 'modest';
+                      } else {
+                        advantage = 'None';
+                        className = 'none';
+                      }
+                      return (
+                        <span className={`badge advantage-badge ${className}`}>
+                          {advantage}
+                        </span>
+                      );
+                    })()}
                   </td>
                   <td>
                     {school['Requires Casper'] === 'True' ? (

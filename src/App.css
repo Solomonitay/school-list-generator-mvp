@@ -219,10 +219,13 @@
 
 /* School Profile Styling */
 .school-name {
-  font-size: 1.125rem; /* text-lg */
-  font-weight: 600; /* font-semibold */
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--brand-text);
   margin: 0 0 1rem 0;
+  line-height: 1.4;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 .preview-details {
