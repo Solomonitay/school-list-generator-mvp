@@ -4,69 +4,60 @@ import ApplicantInfo from './components/ApplicantInfo';
 import SchoolSelector from './components/SchoolSelector';
 import PreliminaryList from './components/PreliminaryList';
 import ResourcesPanel from './components/ResourcesPanel';
+import {
+  classifyGPA,
+  classifyMCAT,
+  getOverallClassification,
+  getSchoolClassification
+} from './utils/classification';
 import './App.css';
 
-// Classification functions
-const getResidencyStatus = (schoolState, applicantState) => {
-  if (!applicantState) return null;
-  return schoolState === applicantState ? 'In-State' : 'Out-of-State';
-};
-
-const classifyGPA = (userGPA, schoolAvgGPA) => {
-  if (!userGPA || !schoolAvgGPA) return null;
-  const diff = parseFloat(userGPA) - parseFloat(schoolAvgGPA);
-  if (diff >= 0.2) return 'Undershoot';
-  if (Math.abs(diff) <= 0.1) return 'Target';
-  if (diff <= -0.2) return 'Reach';
-  return null;
-};
-
-const classifyMCAT = (userMCAT, schoolAvgMCAT) => {
-  if (!userMCAT || !schoolAvgMCAT) return null;
-  const diff = parseInt(userMCAT) - parseInt(schoolAvgMCAT);
-  if (diff >= 3) return 'Undershoot';
-  if (Math.abs(diff) <= 2) return 'Target';
-  if (diff <= -3) return 'Reach';
-  return null;
-};
-
-const getOverallClassification = (gpaClass, mcatClass) => {
-  if (!gpaClass || !mcatClass) return null;
-
-  // Rule matrix from Shemmassian methodology
-  if (gpaClass === 'Reach' && mcatClass === 'Reach') return 'Reach';
-  if (gpaClass === 'Target' && mcatClass === 'Target') return 'Target';
-  if (gpaClass === 'Undershoot' && mcatClass === 'Undershoot') return 'Undershoot';
-  if (gpaClass === 'Reach' && mcatClass === 'Undershoot') return 'Target';
-  if (gpaClass === 'Undershoot' && mcatClass === 'Reach') return 'Target';
-  if (gpaClass === 'Target' && mcatClass === 'Reach') return 'Reach';
-  if (gpaClass === 'Target' && mcatClass === 'Undershoot') return 'Undershoot';
-  if (gpaClass === 'Reach' && mcatClass === 'Target') return 'Reach';
-  if (gpaClass === 'Undershoot' && mcatClass === 'Target') return 'Undershoot';
-
-  return null;
+// LocalStorage keys
+const STORAGE_KEYS = {
+  SCHOOL_LIST: 'medSchoolList_schools',
+  APPLICANT_DATA: 'medSchoolList_applicant'
 };
 
 function App() {
   const [schools, setSchools] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [preliminaryList, setPreliminaryList] = useState([]);
   const [selectedSchoolData, setSelectedSchoolData] = useState(null);
-  const [applicantData, setApplicantData] = useState({
-    mcat: '',
-    gpa: '',
-    sgpa: '',
-    state: ''
+
+  // Load initial state from localStorage
+  const [preliminaryList, setPreliminaryList] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEYS.SCHOOL_LIST);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
   });
 
+  const [applicantData, setApplicantData] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEYS.APPLICANT_DATA);
+      return saved ? JSON.parse(saved) : { mcat: '', gpa: '', sgpa: '', state: '' };
+    } catch {
+      return { mcat: '', gpa: '', sgpa: '', state: '' };
+    }
+  });
+
+  // Save to localStorage when data changes
   useEffect(() => {
-    // Load CSV data
+    localStorage.setItem(STORAGE_KEYS.SCHOOL_LIST, JSON.stringify(preliminaryList));
+  }, [preliminaryList]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.APPLICANT_DATA, JSON.stringify(applicantData));
+  }, [applicantData]);
+
+  // Load CSV data
+  useEffect(() => {
     Papa.parse('/medical_schools_data.csv', {
       download: true,
       header: true,
       complete: (results) => {
         console.log(`Loaded ${results.data.length} schools from CSV`);
-        console.log('Sample school:', results.data[0]);
         setSchools(results.data);
         setLoading(false);
       },
@@ -80,16 +71,16 @@ function App() {
   const addToPreliminaryList = (school) => {
     if (!preliminaryList.find(s => s['Medical School Name'] === school['Medical School Name'])) {
       // Calculate classifications for the school
-      const gpaClass = classifyGPA(applicantData.gpa, school['Average GPA']);
-      const mcatClass = classifyMCAT(applicantData.mcat, school['Average MCAT']);
-      const overallClassification = getOverallClassification(gpaClass, mcatClass);
+      const { gpaClass, mcatClass, overallClassification } = getSchoolClassification(school, applicantData);
 
-      // Add classification data to the school object
+      // Add classification data and notes field to the school object
       const schoolWithClassification = {
         ...school,
         gpaClass,
         mcatClass,
-        overallClassification
+        overallClassification,
+        notes: '',
+        addedAt: Date.now() // For ordering
       };
 
       setPreliminaryList([...preliminaryList, schoolWithClassification]);
@@ -100,12 +91,22 @@ function App() {
     setPreliminaryList(preliminaryList.filter(s => s['Medical School Name'] !== schoolName));
   };
 
+  const updateSchoolNotes = (schoolName, notes) => {
+    setPreliminaryList(preliminaryList.map(s =>
+      s['Medical School Name'] === schoolName ? { ...s, notes } : s
+    ));
+  };
+
+  const reorderSchools = (newOrder) => {
+    setPreliminaryList(newOrder);
+  };
+
   const clearList = () => {
     setPreliminaryList([]);
   };
 
   const exportToCSV = () => {
-    // Group schools by classification (Reach, Target, Safety)
+    // Group schools by classification (Reach, Target, Safety/Undershoot)
     const groupedSchools = {
       reach: [],
       target: [],
@@ -113,9 +114,6 @@ function App() {
     };
 
     preliminaryList.forEach(school => {
-      // Determine classification based on GPA and MCAT (using existing logic)
-      const gpaClass = school.gpaClass || 'Unknown';
-      const mcatClass = school.mcatClass || 'Unknown';
       const overallClassification = school.overallClassification || 'Unknown';
 
       if (overallClassification === 'Reach') {
@@ -128,277 +126,94 @@ function App() {
       }
     });
 
-    // Create structured CSV data similar to the Excel template
+    // Helper function to format school row
+    const formatSchoolRow = (school) => ({
+      'School Name': school['Medical School Name'] || '',
+      'Average MCAT': school['Average MCAT'] || '',
+      'Average GPA': school['Average GPA'] || '',
+      'Casper required?': school['Requires Casper'] === 'True' ? 'Yes' : 'No',
+      'AAMC PREview required?': school['Requires PREview'] && school['Requires PREview'] !== 'Not Required' ? 'Yes' : 'No',
+      'Additional Requirements': '',
+      'Notes': school.notes || ''
+    });
+
+    // Helper function to create empty row
+    const emptyRow = () => ({
+      'School Name': '',
+      'Average MCAT': '',
+      'Average GPA': '',
+      'Casper required?': '',
+      'AAMC PREview required?': '',
+      'Additional Requirements': '',
+      'Notes': ''
+    });
+
+    // Helper function to create section header
+    const sectionHeader = (title) => ({
+      'School Name': title,
+      'Average MCAT': '',
+      'Average GPA': '',
+      'Casper required?': '',
+      'AAMC PREview required?': '',
+      'Additional Requirements': '',
+      'Notes': ''
+    });
+
+    // Helper function to create column header row
+    const columnHeaders = () => ({
+      'School Name': 'School Name',
+      'Average MCAT': 'Average MCAT',
+      'Average GPA': 'Average GPA',
+      'Casper required?': 'Casper required?',
+      'AAMC PREview required?': 'AAMC PREview required?',
+      'Additional Requirements': 'Additional Requirements',
+      'Notes': 'Notes'
+    });
+
     const csvData = [];
 
-    // Add Reach Schools section
-    if (groupedSchools.reach.length > 0) {
-      // Section header
-      csvData.push({
-        'Reach Schools': 'Reach Schools',
-        'School Name': '',
-        'Average MCAT': '',
-        'Average GPA': '',
-        'Casper required?': '',
-        'AAMC PREview required?': '',
-        'Additional Requirements (Duet, Snapshot, etc).': '',
-        'Notes': ''
-      });
-
-      // Header row
-      csvData.push({
-        'Reach Schools': '(by order of preference)',
-        'School Name': 'School Name',
-        'Average MCAT': 'Average MCAT',
-        'Average GPA': 'Average GPA',
-        'Casper required?': 'Casper required?',
-        'AAMC PREview required?': 'AAMC PREview required?',
-        'Additional Requirements (Duet, Snapshot, etc).': 'Additional Requirements (Duet, Snapshot, etc).',
-        'Notes': 'Notes'
-      });
-
-      // Add reach schools with ranking
-      groupedSchools.reach.forEach((school, index) => {
-        csvData.push({
-          'Reach Schools': (index + 1).toString(),
-          'School Name': school['Medical School Name'] || '',
-          'Average MCAT': school['Average MCAT'] || '',
-          'Average GPA': school['Average GPA'] || '',
-          'Casper required?': school['Requires Casper'] === 'True' ? 'Yes' : 'No',
-          'AAMC PREview required?': school['Requires PREview'] !== 'Not Required' ? school['Requires PREview'] : 'No',
-          'Additional Requirements (Duet, Snapshot, etc).': '', // Could be populated based on school data
-          'Notes': school.notes || ''
-        });
-      });
-
-      // Add empty rows to match template (up to 12 slots)
-      for (let i = groupedSchools.reach.length; i < 12; i++) {
-        csvData.push({
-          'Reach Schools': (i + 1).toString(),
-          'School Name': '',
-          'Average MCAT': '',
-          'Average GPA': '',
-          'Casper required?': '',
-          'AAMC PREview required?': '',
-          'Additional Requirements (Duet, Snapshot, etc).': '',
-          'Notes': ''
-        });
-      }
+    // Reach Schools section
+    csvData.push(sectionHeader('Reach Schools'));
+    csvData.push(columnHeaders());
+    groupedSchools.reach.forEach(school => {
+      csvData.push(formatSchoolRow(school));
+    });
+    // Add empty rows to fill to 12 slots
+    for (let i = groupedSchools.reach.length; i < 12; i++) {
+      csvData.push(emptyRow());
     }
 
-    // Add Target Schools section
-    if (groupedSchools.target.length > 0) {
-      // Section header
-      csvData.push({
-        'Reach Schools': 'Target Schools',
-        'School Name': '',
-        'Average MCAT': '',
-        'Average GPA': '',
-        'Casper required?': '',
-        'AAMC PREview required?': '',
-        'Additional Requirements (Duet, Snapshot, etc).': '',
-        'Notes': ''
-      });
-
-      // Header row
-      csvData.push({
-        'Reach Schools': '(by order of preference)',
-        'School Name': 'School Name',
-        'Average MCAT': 'Average MCAT',
-        'Average GPA': 'Average GPA',
-        'Casper required?': 'Casper required?',
-        'AAMC PREview required?': 'AAMC PREview required?',
-        'Additional Requirements (Duet, Snapshot, etc).': 'Additional Requirements (Duet, Snapshot, etc).',
-        'Notes': 'Notes'
-      });
-
-      // Add target schools with ranking
-      groupedSchools.target.forEach((school, index) => {
-        csvData.push({
-          'Reach Schools': (index + 1).toString(),
-          'School Name': school['Medical School Name'] || '',
-          'Average MCAT': school['Average MCAT'] || '',
-          'Average GPA': school['Average GPA'] || '',
-          'Casper required?': school['Requires Casper'] === 'True' ? 'Yes' : 'No',
-          'AAMC PREview required?': school['Requires PREview'] !== 'Not Required' ? school['Requires PREview'] : 'No',
-          'Additional Requirements (Duet, Snapshot, etc).': '',
-          'Notes': school.notes || ''
-        });
-      });
-
-      // Add empty rows to match template (up to 12 slots)
-      for (let i = groupedSchools.target.length; i < 12; i++) {
-        csvData.push({
-          'Reach Schools': (i + 1).toString(),
-          'School Name': '',
-          'Average MCAT': '',
-          'Average GPA': '',
-          'Casper required?': '',
-          'AAMC PREview required?': '',
-          'Additional Requirements (Duet, Snapshot, etc).': '',
-          'Notes': ''
-        });
-      }
+    // Target Schools section
+    csvData.push(sectionHeader('Target Schools'));
+    csvData.push(columnHeaders());
+    groupedSchools.target.forEach(school => {
+      csvData.push(formatSchoolRow(school));
+    });
+    // Add empty rows to fill to 12 slots
+    for (let i = groupedSchools.target.length; i < 12; i++) {
+      csvData.push(emptyRow());
     }
 
-    // Add Safety Schools section
-    if (groupedSchools.safety.length > 0) {
-      // Section header
-      csvData.push({
-        'Reach Schools': 'Safety Schools',
-        'School Name': '',
-        'Average MCAT': '',
-        'Average GPA': '',
-        'Casper required?': '',
-        'AAMC PREview required?': '',
-        'Additional Requirements (Duet, Snapshot, etc).': '',
-        'Notes': ''
-      });
-
-      // Header row
-      csvData.push({
-        'Reach Schools': '(by order of preference)',
-        'School Name': 'School Name',
-        'Average MCAT': 'Average MCAT',
-        'Average GPA': 'Average GPA',
-        'Casper required?': 'Casper required?',
-        'AAMC PREview required?': 'AAMC PREview required?',
-        'Additional Requirements (Duet, Snapshot, etc).': 'Additional Requirements (Duet, Snapshot, etc).',
-        'Notes': 'Notes'
-      });
-
-      // Add safety schools with ranking
-      groupedSchools.safety.forEach((school, index) => {
-        csvData.push({
-          'Reach Schools': (index + 1).toString(),
-          'School Name': school['Medical School Name'] || '',
-          'Average MCAT': school['Average MCAT'] || '',
-          'Average GPA': school['Average GPA'] || '',
-          'Casper required?': school['Requires Casper'] === 'True' ? 'Yes' : 'No',
-          'AAMC PREview required?': school['Requires PREview'] !== 'Not Required' ? school['Requires PREview'] : 'No',
-          'Additional Requirements (Duet, Snapshot, etc).': '',
-          'Notes': school.notes || ''
-        });
-      });
-
-      // Add empty rows to match template (up to 13 slots)
-      for (let i = groupedSchools.safety.length; i < 13; i++) {
-        csvData.push({
-          'Reach Schools': (i + 1).toString(),
-          'School Name': '',
-          'Average MCAT': '',
-          'Average GPA': '',
-          'Casper required?': '',
-          'AAMC PREview required?': '',
-          'Additional Requirements (Duet, Snapshot, etc).': '',
-          'Notes': ''
-        });
-      }
+    // Safety Schools section
+    csvData.push(sectionHeader('Safety Schools'));
+    csvData.push(columnHeaders());
+    groupedSchools.safety.forEach(school => {
+      csvData.push(formatSchoolRow(school));
+    });
+    // Add empty rows to fill to 13 slots
+    for (let i = groupedSchools.safety.length; i < 13; i++) {
+      csvData.push(emptyRow());
     }
 
-    // Add summary section (empty rows followed by totals)
-    csvData.push(
-      {
-        'Reach Schools': '',
-        'School Name': '',
-        'Average MCAT': '',
-        'Average GPA': '',
-        'Casper required?': '',
-        'AAMC PREview required?': '',
-        'Additional Requirements (Duet, Snapshot, etc).': '',
-        'Notes': ''
-      },
-      {
-        'Reach Schools': '',
-        'School Name': '',
-        'Average MCAT': '',
-        'Average GPA': '',
-        'Casper required?': '',
-        'AAMC PREview required?': '',
-        'Additional Requirements (Duet, Snapshot, etc).': '',
-        'Notes': ''
-      },
-      {
-        'Reach Schools': '',
-        'School Name': '',
-        'Average MCAT': '',
-        'Average GPA': '',
-        'Casper required?': '',
-        'AAMC PREview required?': '',
-        'Additional Requirements (Duet, Snapshot, etc).': '',
-        'Notes': ''
-      },
-      {
-        'Reach Schools': '',
-        'School Name': '',
-        'Average MCAT': '',
-        'Average GPA': '',
-        'Casper required?': '',
-        'AAMC PREview required?': '',
-        'Additional Requirements (Duet, Snapshot, etc).': '',
-        'Notes': ''
-      },
-      {
-        'Reach Schools': 'TOTAL:',
-        'School Name': '',
-        'Average MCAT': '',
-        'Average GPA': '',
-        'Casper required?': '',
-        'AAMC PREview required?': '',
-        'Additional Requirements (Duet, Snapshot, etc).': '',
-        'Notes': ''
-      },
-      {
-        'Reach Schools': 'SUBMITTED:',
-        'School Name': '',
-        'Average MCAT': '',
-        'Average GPA': '',
-        'Casper required?': '',
-        'AAMC PREview required?': '',
-        'Additional Requirements (Duet, Snapshot, etc).': '',
-        'Notes': ''
-      },
-      {
-        'Reach Schools': 'INTERVIEWS:',
-        'School Name': '',
-        'Average MCAT': '',
-        'Average GPA': '',
-        'Casper required?': '',
-        'AAMC PREview required?': '',
-        'Additional Requirements (Duet, Snapshot, etc).': '',
-        'Notes': ''
-      },
-      {
-        'Reach Schools': 'WAITLIST:',
-        'School Name': '',
-        'Average MCAT': '',
-        'Average GPA': '',
-        'Casper required?': '',
-        'AAMC PREview required?': '',
-        'Additional Requirements (Duet, Snapshot, etc).': '',
-        'Notes': ''
-      },
-      {
-        'Reach Schools': 'REJECTED:',
-        'School Name': '',
-        'Average MCAT': '',
-        'Average GPA': '',
-        'Casper required?': '',
-        'AAMC PREview required?': '',
-        'Additional Requirements (Duet, Snapshot, etc).': '',
-        'Notes': ''
-      },
-      {
-        'Reach Schools': 'ACCEPTED:',
-        'School Name': '',
-        'Average MCAT': '',
-        'Average GPA': '',
-        'Casper required?': '',
-        'AAMC PREview required?': '',
-        'Additional Requirements (Duet, Snapshot, etc).': '',
-        'Notes': ''
-      }
-    );
+    // Summary section
+    csvData.push(emptyRow());
+    csvData.push(emptyRow());
+    csvData.push({ ...emptyRow(), 'School Name': `TOTAL: ${preliminaryList.length}` });
+    csvData.push({ ...emptyRow(), 'School Name': 'SUBMITTED:' });
+    csvData.push({ ...emptyRow(), 'School Name': 'INTERVIEWS:' });
+    csvData.push({ ...emptyRow(), 'School Name': 'WAITLIST:' });
+    csvData.push({ ...emptyRow(), 'School Name': 'REJECTED:' });
+    csvData.push({ ...emptyRow(), 'School Name': 'ACCEPTED:' });
 
     const csv = Papa.unparse(csvData);
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -496,28 +311,35 @@ function App() {
                     </div>
 
                     {/* Classification - Always calculated */}
-                    <div className="detail-row">
-                      <span className="detail-label">Your Classification:</span>
-                      <div className="classification-display">
-                        {(() => {
-                          const gpaClass = classifyGPA(applicantData.gpa, selectedSchoolData['Average GPA']);
-                          const mcatClass = classifyMCAT(applicantData.mcat, selectedSchoolData['Average MCAT']);
-                          const overallClassification = getOverallClassification(gpaClass, mcatClass);
+                    {(() => {
+                      const gpaClass = classifyGPA(applicantData.gpa, selectedSchoolData['Average GPA']);
+                      const mcatClass = classifyMCAT(applicantData.mcat, selectedSchoolData['Average MCAT']);
+                      const overallClassification = getOverallClassification(gpaClass, mcatClass);
 
-                          if (overallClassification) {
-                            return (
-                              <span className={`badge classification-badge ${overallClassification.toLowerCase()}`}>
-                                {overallClassification}
-                              </span>
-                            );
-                          } else if (applicantData.gpa && applicantData.mcat) {
-                            return <span className="badge classification-badge na">Unable to classify</span>;
-                          } else {
-                            return <span className="classification-placeholder">Enter GPA & MCAT above</span>;
-                          }
-                        })()}
-                      </div>
-                    </div>
+                      if (overallClassification) {
+                        return (
+                          <div className="detail-row">
+                            <span className="detail-label">Your Classification:</span>
+                            <span className={`badge classification-badge ${overallClassification.toLowerCase()}`}>
+                              {overallClassification}
+                            </span>
+                          </div>
+                        );
+                      } else if (applicantData.gpa && applicantData.mcat) {
+                        return (
+                          <div className="detail-row">
+                            <span className="detail-label">Your Classification:</span>
+                            <span className="badge classification-badge na">Unable to classify</span>
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div className="detail-row full-width classification-prompt">
+                            <span className="classification-placeholder">Enter GPA & MCAT above to see classification</span>
+                          </div>
+                        );
+                      }
+                    })()}
 
                     {/* Matriculation Information - Always shown */}
                     <div className="detail-row">
@@ -540,12 +362,13 @@ function App() {
                     </div>
                     <div className="detail-row">
                       <span className="detail-label">In-State Advantage:</span>
-                      <span className="detail-value">
-                        {selectedSchoolData['In-State Advantage'] && selectedSchoolData['In-State Advantage'] !== 'unknown'
-                          ? selectedSchoolData['In-State Advantage']
-                          : 'N/A'
-                        }
-                      </span>
+                      {selectedSchoolData['In-State Advantage'] && selectedSchoolData['In-State Advantage'] !== 'unknown' ? (
+                        <span className={`badge advantage-badge ${selectedSchoolData['In-State Advantage'].toLowerCase()}`}>
+                          {selectedSchoolData['In-State Advantage']}
+                        </span>
+                      ) : (
+                        <span className="detail-value">N/A</span>
+                      )}
                     </div>
 
                   </div>
@@ -593,6 +416,8 @@ function App() {
             <PreliminaryList
               schools={preliminaryList}
               onRemove={removeFromPreliminaryList}
+              onUpdateNotes={updateSchoolNotes}
+              onReorder={reorderSchools}
               applicantData={applicantData}
             />
           </div>

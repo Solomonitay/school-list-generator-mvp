@@ -438,13 +438,147 @@
   .table-wrapper {
     overflow-x: scroll;
   }
+}
 
-  .schools-table {
-    min-width: 800px;
-  }
+/* Remove Button */
+.action-cell {
+  width: 40px;
+  text-align: center;
+}
 
-  .chip {
-    padding: 0 0.75rem;
-    font-size: 0.8rem;
-  }
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--brand-text-muted);
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+
+.remove-btn:hover {
+  background: rgba(237, 28, 39, 0.1);
+  color: var(--brand-red);
+}
+
+/* Filter Row */
+.filter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Classification Filter */
+.classification-filter {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.classification-chip {
+  height: 2rem;
+  padding: 0 0.75rem;
+  font-size: 0.8125rem;
+}
+
+.classification-chip.reach.active {
+  background: var(--brand-red);
+  border-color: var(--brand-red);
+  color: white;
+}
+
+.classification-chip.target.active {
+  background: var(--brand-teal-dark);
+  border-color: var(--brand-teal-dark);
+  color: white;
+}
+
+.classification-chip.safety.active {
+  background: #16a34a;
+  border-color: #16a34a;
+  color: white;
+}
+
+/* Drag and Drop */
+.drag-hint {
+  padding: 0.5rem 1.25rem;
+  background: var(--brand-muted-bg);
+  font-size: 0.75rem;
+  color: var(--brand-text-muted);
+  border-bottom: 1px solid var(--brand-border);
+}
+
+.drag-handle {
+  width: 30px;
+  cursor: grab;
+  text-align: center;
+  color: var(--brand-text-muted);
+  user-select: none;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.drag-icon {
+  font-size: 0.875rem;
+  letter-spacing: -2px;
+}
+
+.drag-handle-header {
+  width: 30px;
+}
+
+tr.dragging {
+  opacity: 0.5;
+  background: var(--brand-muted-bg);
+}
+
+tr.drag-over {
+  border-top: 2px solid var(--brand-teal);
+}
+
+tr[draggable="true"] {
+  transition: background-color 0.15s;
+}
+
+tr[draggable="true"]:hover {
+  background: var(--brand-muted-bg);
+}
+
+/* Advantage Badge */
+.advantage-badge {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid;
+}
+
+.advantage-badge.huge {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.advantage-badge.material {
+  background: rgba(251, 191, 36, 0.1);
+  color: #d97706;
+  border-color: rgba(251, 191, 36, 0.3);
+}
+
+.advantage-badge.none {
+  background: rgba(156, 163, 175, 0.1);
+  color: #6b7280;
+  border-color: rgba(156, 163, 175, 0.3);
+}
+
+.na-text {
+  color: var(--brand-text-muted);
+  font-size: 0.75rem;
 }

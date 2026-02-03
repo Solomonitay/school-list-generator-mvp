@@ -1,52 +1,20 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
+import {
+  classifyGPA,
+  classifyMCAT,
+  getOverallClassification,
+  getResidencyStatus
+} from '../utils/classification';
 import './PreliminaryList.css';
 
-function PreliminaryList({ schools, onRemove, applicantData }) {
+function PreliminaryList({ schools, onRemove, onUpdateNotes, onReorder, applicantData }) {
   const [filterType, setFilterType] = useState('All'); // All, MD, DO
+  const [filterClassification, setFilterClassification] = useState('All'); // All, Reach, Target, Safety
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('name'); // name, avgMcat, avgGpa
+  const [sortBy, setSortBy] = useState('name'); // name, avgMcat, avgGpa, classification
   const [sortOrder, setSortOrder] = useState('asc');
-
-  // Classification functions
-  const getResidencyStatus = (schoolState, applicantState) => {
-    if (!applicantState) return null;
-    return schoolState === applicantState ? 'In-State' : 'Out-of-State';
-  };
-
-  const classifyGPA = (userGPA, schoolAvgGPA) => {
-    if (!userGPA || !schoolAvgGPA) return null;
-    const diff = parseFloat(userGPA) - parseFloat(schoolAvgGPA);
-    if (diff >= 0.2) return 'Undershoot';
-    if (Math.abs(diff) <= 0.1) return 'Target';
-    if (diff <= -0.2) return 'Reach';
-    return null;
-  };
-
-  const classifyMCAT = (userMCAT, schoolAvgMCAT) => {
-    if (!userMCAT || !schoolAvgMCAT) return null;
-    const diff = parseInt(userMCAT) - parseInt(schoolAvgMCAT);
-    if (diff >= 3) return 'Undershoot';
-    if (Math.abs(diff) <= 2) return 'Target';
-    if (diff <= -3) return 'Reach';
-    return null;
-  };
-
-  const getOverallClassification = (gpaClass, mcatClass) => {
-    if (!gpaClass || !mcatClass) return null;
-
-    // Rule matrix from Shemmassian methodology
-    if (gpaClass === 'Reach' && mcatClass === 'Reach') return 'Reach';
-    if (gpaClass === 'Target' && mcatClass === 'Target') return 'Target';
-    if (gpaClass === 'Undershoot' && mcatClass === 'Undershoot') return 'Undershoot';
-    if (gpaClass === 'Reach' && mcatClass === 'Undershoot') return 'Target';
-    if (gpaClass === 'Undershoot' && mcatClass === 'Reach') return 'Target';
-    if (gpaClass === 'Target' && mcatClass === 'Reach') return 'Reach';
-    if (gpaClass === 'Target' && mcatClass === 'Undershoot') return 'Undershoot';
-    if (gpaClass === 'Reach' && mcatClass === 'Target') return 'Reach';
-    if (gpaClass === 'Undershoot' && mcatClass === 'Target') return 'Undershoot';
-
-    return null;
-  };
+  const [draggedIndex, setDraggedIndex] = useState(null);
+  const [dragOverIndex, setDragOverIndex] = useState(null);
 
   // Calculate degree type counts
   const degreeCounts = useMemo(() => {
@@ -97,9 +65,23 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
   const filteredAndSortedSchools = useMemo(() => {
     let filtered = schools;
 
-    // Filter by type
+    // Filter by degree type
     if (filterType !== 'All') {
       filtered = filtered.filter(school => school['Degree Type'] === filterType);
+    }
+
+    // Filter by classification
+    if (filterClassification !== 'All') {
+      filtered = filtered.filter(school => {
+        const gpaClass = classifyGPA(applicantData.gpa, school['Average GPA']);
+        const mcatClass = classifyMCAT(applicantData.mcat, school['Average MCAT']);
+        const classification = getOverallClassification(gpaClass, mcatClass);
+        
+        if (filterClassification === 'Safety') {
+          return classification === 'Undershoot';
+        }
+        return classification === filterClassification;
+      });
     }
 
     // Filter by search
@@ -111,7 +93,7 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
     }
 
     // Sort
-    filtered.sort((a, b) => {
+    filtered = [...filtered].sort((a, b) => {
       let aVal, bVal;
       switch (sortBy) {
         case 'avgMcat':
@@ -121,6 +103,19 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
         case 'avgGpa':
           aVal = parseFloat(a['Average GPA']) || 0;
           bVal = parseFloat(b['Average GPA']) || 0;
+          break;
+        case 'classification':
+          const classOrder = { 'Reach': 0, 'Target': 1, 'Undershoot': 2, null: 3 };
+          const aClass = getOverallClassification(
+            classifyGPA(applicantData.gpa, a['Average GPA']),
+            classifyMCAT(applicantData.mcat, a['Average MCAT'])
+          );
+          const bClass = getOverallClassification(
+            classifyGPA(applicantData.gpa, b['Average GPA']),
+            classifyMCAT(applicantData.mcat, b['Average MCAT'])
+          );
+          aVal = classOrder[aClass] ?? 3;
+          bVal = classOrder[bClass] ?? 3;
           break;
         default: // name
           aVal = a['Medical School Name'].toLowerCase();
@@ -135,16 +130,53 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
     });
 
     return filtered;
-  }, [schools, filterType, searchQuery, sortBy, sortOrder, applicantData]);
+  }, [schools, filterType, filterClassification, searchQuery, sortBy, sortOrder, applicantData]);
 
-  const handleSort = (newSortBy) => {
-    if (sortBy === newSortBy) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortBy(newSortBy);
-      setSortOrder('asc');
+  // Drag and drop handlers
+  const handleDragStart = useCallback((e, index) => {
+    setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', e.target.outerHTML);
+    e.target.style.opacity = '0.5';
+  }, []);
+
+  const handleDragEnd = useCallback((e) => {
+    e.target.style.opacity = '1';
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  }, []);
+
+  const handleDragOver = useCallback((e, index) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    setDragOverIndex(index);
+  }, []);
+
+  const handleDragLeave = useCallback(() => {
+    setDragOverIndex(null);
+  }, []);
+
+  const handleDrop = useCallback((e, dropIndex) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === dropIndex) {
+      setDraggedIndex(null);
+      setDragOverIndex(null);
+      return;
     }
-  };
+
+    const newSchools = [...schools];
+    const [draggedSchool] = newSchools.splice(draggedIndex, 1);
+    newSchools.splice(dropIndex, 0, draggedSchool);
+    
+    onReorder(newSchools);
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  }, [draggedIndex, schools, onReorder]);
+
+  // Notes handler with debounce
+  const handleNotesChange = useCallback((schoolName, value) => {
+    onUpdateNotes(schoolName, value);
+  }, [onUpdateNotes]);
 
   if (schools.length === 0) {
     return (
@@ -160,25 +192,55 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
     <div className="school-list-container">
       {/* Controls */}
       <div className="list-controls">
-        <div className="filter-chips">
-          <button
-            className={`chip ${filterType === 'All' ? 'active' : ''}`}
-            onClick={() => setFilterType('All')}
-          >
-            All ({degreeCounts.all})
-          </button>
-          <button
-            className={`chip ${filterType === 'MD' ? 'active' : ''}`}
-            onClick={() => setFilterType('MD')}
-          >
-            MD ({degreeCounts.md})
-          </button>
-          <button
-            className={`chip ${filterType === 'DO' ? 'active' : ''}`}
-            onClick={() => setFilterType('DO')}
-          >
-            DO ({degreeCounts.do})
-          </button>
+        <div className="filter-row">
+          <div className="filter-chips">
+            <button
+              className={`chip ${filterType === 'All' ? 'active' : ''}`}
+              onClick={() => setFilterType('All')}
+            >
+              All ({degreeCounts.all})
+            </button>
+            <button
+              className={`chip ${filterType === 'MD' ? 'active' : ''}`}
+              onClick={() => setFilterType('MD')}
+            >
+              MD ({degreeCounts.md})
+            </button>
+            <button
+              className={`chip ${filterType === 'DO' ? 'active' : ''}`}
+              onClick={() => setFilterType('DO')}
+            >
+              DO ({degreeCounts.do})
+            </button>
+          </div>
+
+          {/* Classification Filter */}
+          <div className="classification-filter">
+            <button
+              className={`chip classification-chip ${filterClassification === 'All' ? 'active' : ''}`}
+              onClick={() => setFilterClassification('All')}
+            >
+              All
+            </button>
+            <button
+              className={`chip classification-chip reach ${filterClassification === 'Reach' ? 'active' : ''}`}
+              onClick={() => setFilterClassification('Reach')}
+            >
+              Reach ({classificationCounts.reach})
+            </button>
+            <button
+              className={`chip classification-chip target ${filterClassification === 'Target' ? 'active' : ''}`}
+              onClick={() => setFilterClassification('Target')}
+            >
+              Target ({classificationCounts.target})
+            </button>
+            <button
+              className={`chip classification-chip safety ${filterClassification === 'Safety' ? 'active' : ''}`}
+              onClick={() => setFilterClassification('Safety')}
+            >
+              Safety ({classificationCounts.safety})
+            </button>
+          </div>
         </div>
 
         {/* Classification Summary */}
@@ -227,8 +289,15 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
             <option value="avgMcat-desc">MCAT ↓</option>
             <option value="avgGpa-asc">GPA ↑</option>
             <option value="avgGpa-desc">GPA ↓</option>
+            <option value="classification-asc">Classification (Reach→Safety)</option>
+            <option value="classification-desc">Classification (Safety→Reach)</option>
           </select>
         </div>
+      </div>
+
+      {/* Drag hint */}
+      <div className="drag-hint">
+        <span>💡 Drag rows to reorder your list</span>
       </div>
 
       {/* Table */}
@@ -236,21 +305,20 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
         <table className="schools-table">
           <thead>
             <tr>
+              <th className="drag-handle-header"></th>
               <th className="school-cell">School</th>
               <th>Degree</th>
-              <th>Application System</th>
+              <th>Application</th>
               <th>State</th>
               <th>Avg GPA</th>
               <th>Avg MCAT</th>
-              <th>Min MCAT</th>
               {applicantData.state && <th>Residency</th>}
-              <th>In-State %</th>
-              <th>Out-State %</th>
               <th>In-State Advantage</th>
               <th>Casper</th>
               <th>PREview</th>
               <th>Classification</th>
               <th>Notes</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -259,9 +327,22 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
               const gpaClass = classifyGPA(applicantData.gpa, school['Average GPA']);
               const mcatClass = classifyMCAT(applicantData.mcat, school['Average MCAT']);
               const overallClassification = getOverallClassification(gpaClass, mcatClass);
+              const isDragOver = dragOverIndex === index;
 
               return (
-                <tr key={index}>
+                <tr
+                  key={school['Medical School Name']}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, index)}
+                  onDragEnd={handleDragEnd}
+                  onDragOver={(e) => handleDragOver(e, index)}
+                  onDragLeave={handleDragLeave}
+                  onDrop={(e) => handleDrop(e, index)}
+                  className={`${isDragOver ? 'drag-over' : ''} ${draggedIndex === index ? 'dragging' : ''}`}
+                >
+                  <td className="drag-handle">
+                    <span className="drag-icon">⋮⋮</span>
+                  </td>
                   <td className="school-cell">
                     <a
                       href={school['Website URL']}
@@ -281,7 +362,6 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                   <td className="text-cell">{school.State}</td>
                   <td className="text-cell tabular-nums">{school['Average GPA']}</td>
                   <td className="text-cell tabular-nums">{school['Average MCAT']}</td>
-                  <td className="text-cell">{school['Minimum MCAT Notes']}</td>
                   {applicantData.state && (
                     <td>
                       {residencyStatus && (
@@ -291,30 +371,27 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                       )}
                     </td>
                   )}
-                  <td className="text-cell tabular-nums">
-                    {school['In-State Matriculants %'] ? `${school['In-State Matriculants %']}%` : 'N/A'}
-                  </td>
-                  <td className="text-cell tabular-nums">
-                    {school['Out-of-State Matriculants %'] ? `${school['Out-of-State Matriculants %']}%` : 'N/A'}
-                  </td>
                   <td className="text-cell">
-                    {school['In-State Advantage'] && school['In-State Advantage'] !== 'unknown'
-                      ? school['In-State Advantage']
-                      : 'N/A'
-                    }
+                    {school['In-State Advantage'] && school['In-State Advantage'] !== 'unknown' ? (
+                      <span className={`badge advantage-badge ${school['In-State Advantage'].toLowerCase()}`}>
+                        {school['In-State Advantage']}
+                      </span>
+                    ) : (
+                      <span className="na-text">N/A</span>
+                    )}
                   </td>
                   <td>
                     {school['Requires Casper'] === 'True' ? (
                       <span className="badge casper-badge required">Required</span>
                     ) : (
-                      <span className="badge casper-badge not-required">Not Required</span>
+                      <span className="badge casper-badge not-required">No</span>
                     )}
                   </td>
                   <td>
-                    {school['Requires PREview'] !== 'Not Required' ? (
-                      <span className="badge preview-badge required">{school['Requires PREview']}</span>
+                    {school['Requires PREview'] && school['Requires PREview'] !== 'Not Required' ? (
+                      <span className="badge preview-badge required">Required</span>
                     ) : (
-                      <span className="badge preview-badge not-required">Not Required</span>
+                      <span className="badge preview-badge not-required">No</span>
                     )}
                   </td>
                   <td>
@@ -323,9 +400,9 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                         {overallClassification}
                       </span>
                     ) : applicantData.gpa && applicantData.mcat ? (
-                      <span className="badge classification-badge na">Unable to classify</span>
+                      <span className="badge classification-badge na">N/A</span>
                     ) : (
-                      <span className="classification-placeholder">Enter your stats</span>
+                      <span className="classification-placeholder">-</span>
                     )}
                   </td>
                   <td className="notes-cell">
@@ -333,8 +410,18 @@ function PreliminaryList({ schools, onRemove, applicantData }) {
                       type="text"
                       placeholder="Add note..."
                       className="notes-input"
-                      defaultValue={school.notes || ''}
+                      value={school.notes || ''}
+                      onChange={(e) => handleNotesChange(school['Medical School Name'], e.target.value)}
                     />
+                  </td>
+                  <td className="action-cell">
+                    <button
+                      className="remove-btn"
+                      onClick={() => onRemove(school['Medical School Name'])}
+                      title="Remove from list"
+                    >
+                      ✕
+                    </button>
                   </td>
                 </tr>
               );
