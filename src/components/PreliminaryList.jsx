@@ -313,7 +313,8 @@ function PreliminaryList({ schools, onRemove, onUpdateNotes, onReorder, applican
               <th>Avg GPA</th>
               <th>Avg MCAT</th>
               {applicantData.state && <th>Residency</th>}
-              <th>In-State Advantage</th>
+              <th>In-State %</th>
+              <th>OOS %</th>
               <th>Casper</th>
               <th>PREview</th>
               <th>Classification</th>
@@ -371,14 +372,11 @@ function PreliminaryList({ schools, onRemove, onUpdateNotes, onReorder, applican
                       )}
                     </td>
                   )}
-                  <td className="text-cell">
-                    {school['In-State Advantage'] && school['In-State Advantage'] !== 'unknown' ? (
-                      <span className={`badge advantage-badge ${school['In-State Advantage'].toLowerCase()}`}>
-                        {school['In-State Advantage']}
-                      </span>
-                    ) : (
-                      <span className="na-text">N/A</span>
-                    )}
+                  <td className="text-cell tabular-nums">
+                    {school['In-State Matriculants %'] ? `${school['In-State Matriculants %']}%` : 'N/A'}
+                  </td>
+                  <td className="text-cell tabular-nums">
+                    {school['Out-of-State Matriculants %'] ? `${school['Out-of-State Matriculants %']}%` : 'N/A'}
                   </td>
                   <td>
                     {school['Requires Casper'] === 'True' ? (

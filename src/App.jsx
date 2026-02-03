@@ -360,17 +360,6 @@ function App() {
                         }
                       </span>
                     </div>
-                    <div className="detail-row">
-                      <span className="detail-label">In-State Advantage:</span>
-                      {selectedSchoolData['In-State Advantage'] && selectedSchoolData['In-State Advantage'] !== 'unknown' ? (
-                        <span className={`badge advantage-badge ${selectedSchoolData['In-State Advantage'].toLowerCase()}`}>
-                          {selectedSchoolData['In-State Advantage']}
-                        </span>
-                      ) : (
-                        <span className="detail-value">N/A</span>
-                      )}
-                    </div>
-
                   </div>
 
                   {/* Action Buttons */}
