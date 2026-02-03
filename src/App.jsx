@@ -102,7 +102,9 @@ function App() {
   };
 
   const clearList = () => {
-    setPreliminaryList([]);
+    if (window.confirm(`Are you sure you want to clear your entire list? This will remove all ${preliminaryList.length} school(s) and cannot be undone.`)) {
+      setPreliminaryList([]);
+    }
   };
 
   const exportToCSV = () => {
@@ -443,6 +445,24 @@ function App() {
           </div>
         </main>
         </div>
+      </div>
+
+      {/* Mobile Action Bar - shown only on mobile */}
+      <div className="mobile-action-bar">
+        <button
+          className="btn btn-secondary"
+          onClick={clearList}
+          disabled={preliminaryList.length === 0}
+        >
+          Clear List
+        </button>
+        <button
+          className="btn btn-primary"
+          onClick={exportToCSV}
+          disabled={preliminaryList.length === 0}
+        >
+          Export List
+        </button>
       </div>
     </div>
   );
